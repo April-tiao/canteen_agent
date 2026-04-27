@@ -8,13 +8,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol
 
-from canteen_gateway_demo import (
-    TODAY,
+from canteen_core import (
     correct_query,
-    domain_score,
     extract_time,
     normalize_text,
     percentile,
+    rule_domain_score,
 )
 
 
@@ -32,7 +31,7 @@ class RuleFallbackClassifier:
     """Local smoke-test fallback. Do not use this as the production classifier."""
 
     def predict_score(self, text: str, time_info: dict[str, Any] | None) -> float:
-        return domain_score(text, time_info)
+        return rule_domain_score(text, time_info)
 
 
 class OnnxBertBinaryClassifier:
@@ -108,7 +107,7 @@ class ProductionCanteenGateway:
 
         normalized = normalize_text(query)
         corrected_query, corrections = correct_query(normalized)
-        time_info = extract_time(corrected_query, today=TODAY)
+        time_info = extract_time(corrected_query)
         score = self.classifier.predict_score(corrected_query, time_info)
         domain = "in_domain" if score >= self.threshold else "out_domain"
 

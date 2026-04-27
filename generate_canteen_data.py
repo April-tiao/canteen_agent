@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from canteen_gateway_demo import correct_query
+from canteen_core import correct_query
 
 
 OUTPUT_FILE = Path(__file__).with_name("canteen_test_data_300.json")

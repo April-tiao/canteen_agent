@@ -1,175 +1,114 @@
 # Canteen Agent Gateway
 
-智慧食堂 50ms 前置网关原型与生产化示例，覆盖：
+智慧食堂前置网关生产化示例，在线阶段只做低延迟推理：
 
-- 意图二分类：判断用户 query 是否属于智慧食堂业务范围
-- 时间提取：规则抽取今天、明天、餐段、几点等表达
-- 用户 query 纠正：领域词典纠正常见错别字、菜品名、食堂名、支付词
-- 端到端时延统计：输出单条 query 的 avg、p50、p95、p99、max
+- 食堂业务相关性二分类
+- 用户 query 领域纠错
+- 日期级时间区间提取
+- 单条 query 端到端时延统计
 
-当前项目包含假数据、规则 demo、模型训练导出脚本、ONNX INT8 生产推理入口。
+当前线上入口是 `production_gateway.py`，二分类默认加载离线训练并量化好的 ONNX INT8 模型。
 
 ## 项目结构
 
 ```text
 .
-├── canteen_gateway_demo.py              # 规则版 demo，便于快速理解流程
-├── canteen_test_data_300.json           # 300 条假测试数据
-├── generate_canteen_data.py             # 生成 300 条假数据
-├── production_gateway.py                # 生产入口，加载 ONNX INT8 模型二分类
-├── train_export_domain_classifier.py    # 微调中文小模型并导出 ONNX / INT8 ONNX
-├── train_and_eval.ps1                   # Windows 一键安装依赖、训练、评测
-├── requirements-prod.txt                # 训练和推理依赖
-├── README_PRODUCTION.md                 # 生产部署补充说明
+├── canteen_core.py                       # 生产共享逻辑：纠错、时间区间、规则 fallback、统计工具
+├── production_gateway.py                 # 生产推理入口：ONNX 二分类 + 纠错 + 时间区间
+├── train_export_domain_classifier.py     # 离线训练并导出 ONNX / ONNX INT8
+├── generate_canteen_data.py              # 生成 300 条测试数据
+├── test_time_ranges.py                   # 时间区间规则测试
+├── train_and_eval.ps1                    # Windows 一键训练与评测脚本
+├── requirements-prod.txt                 # 训练和推理依赖
+├── canteen_test_data_300.json            # 300 条测试数据
 └── artifacts/
-    ├── domain_classifier.onnx           # 未量化 ONNX 模型
-    ├── domain_classifier_int8.onnx      # INT8 量化 ONNX 模型，生产默认加载
-    ├── vocab.txt                        # tokenizer 词表备份
-    └── domain_classifier_hf/            # HuggingFace tokenizer/model 配置
+    ├── domain_classifier_int8.onnx       # 生产默认加载的 INT8 二分类模型
+    ├── domain_classifier.onnx            # 未量化 ONNX，便于对比评测
+    ├── vocab.txt                         # 词表备份
+    └── domain_classifier_hf/             # tokenizer 配置目录
 ```
 
-## 任务边界
-
-本项目只做 50ms 内前置处理：
+## 在线链路
 
 ```text
-query
- -> 文本规范化
- -> 领域 query 纠错
- -> 时间规则提取
- -> 二分类模型判断 in_domain / out_domain
- -> 输出结果和时延
+用户 query
+  -> normalize
+  -> 领域 query 纠错
+  -> 日期级时间区间提取
+  -> ONNX INT8 二分类模型
+  -> in_domain / out_domain
 ```
 
-不包含：
+生产入口不会实时训练模型。模型训练、导出、量化都在离线阶段完成。
 
-- 图片理解 / VLM
-- 100 个二级意图精分类
-- 多意图拆分
-- 上下文 summary
-- 复杂槽位填充
+## 二分类模型
 
-## 模型方案
-
-二分类模型使用推荐的小型中文 BERT/RoBERTa：
+当前训练脚本默认使用：
 
 ```text
 uer/chinese_roberta_L-4_H-512
 ```
 
-训练脚本会：
+离线训练后导出：
 
-1. 读取 `canteen_test_data_300.json`
-2. 使用 `corrected` 字段作为训练文本
-3. 将 `domain` 转成二分类标签
-4. 微调 `AutoModelForSequenceClassification`
-5. 导出 `artifacts/domain_classifier.onnx`
-6. 动态量化成 `artifacts/domain_classifier_int8.onnx`
+```text
+artifacts/domain_classifier.onnx
+artifacts/domain_classifier_int8.onnx
+artifacts/domain_classifier_hf/
+```
 
-生产推理默认加载：
+在线推理默认使用：
 
 ```text
 artifacts/domain_classifier_int8.onnx
 artifacts/domain_classifier_hf/
 ```
 
-## 运行环境
+## 时间区间输出
 
-推荐 Python 3.10+。
+时间提取依赖在线当天日期，即 `date.today()`。输出只保留年月日，不输出时分秒。
 
-在当前 Codex 桌面环境里，使用的是内置 Python：
+统一输出格式：
 
-```powershell
-C:\Users\MyPC\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe
+```json
+{
+  "raw": "上个月",
+  "granularity": "month",
+  "start": "2026-03-01",
+  "end": "2026-03-31"
+}
 ```
 
-普通机器上如果 `python` 和 `pip` 已在 PATH，可以直接用 `python`。
-
-## 一键运行
-
-Windows PowerShell：
-
-```powershell
-.\train_and_eval.ps1
-```
-
-脚本会依次执行：
-
-```powershell
-python -m pip install -r requirements-prod.txt
-python train_export_domain_classifier.py --data canteen_test_data_300.json
-python production_gateway.py --data canteen_test_data_300.json
-```
-
-如果本机没有全局 `python`，请打开 `train_and_eval.ps1`，把 `$Python` 改成你的 Python 路径。
-
-## 分步运行
-
-安装依赖：
-
-```powershell
-python -m pip install -r requirements-prod.txt
-```
-
-生成假数据：
-
-```powershell
-python generate_canteen_data.py
-```
-
-训练并导出模型：
-
-```powershell
-python train_export_domain_classifier.py --data canteen_test_data_300.json
-```
-
-运行生产推理评测：
-
-```powershell
-python production_gateway.py --data canteen_test_data_300.json
-```
-
-没有模型产物时，仅做规则 fallback 烟测：
-
-```powershell
-python production_gateway.py --data canteen_test_data_300.json --allow-rule-fallback
-```
-
-注意：`--allow-rule-fallback` 只能用于本地链路测试，不能用于生产。
-
-## 输出示例
-
-当前 300 条假数据、ONNX INT8 模型版评测结果：
+以当天为 `2026-04-27` 为例：
 
 ```text
-=== Production Gateway Evaluation ===
-test_size: 300
-domain_accuracy:     100.00% (300/300)
-time_accuracy:       100.00% (300/300)
-correction_accuracy: 100.00% (300/300)
-
-=== Per-query Latency ===
-avg_ms: 4.1550
-p50_ms: 3.8720
-p95_ms: 5.3543
-p99_ms: 6.3168
-max_ms: 6.3415
-under_50ms: 100.00%
+今天       -> 2026-04-27 - 2026-04-27
+昨天晚餐   -> 2026-04-26 - 2026-04-26
+上周       -> 2026-04-20 - 2026-04-26
+本周午餐   -> 2026-04-27 - 2026-05-03
+上个月     -> 2026-03-01 - 2026-03-31
+本月       -> 2026-04-01 - 2026-04-30
+上个季度   -> 2026-01-01 - 2026-03-31
+本季度     -> 2026-04-01 - 2026-06-30
+去年       -> 2025-01-01 - 2025-12-31
+今年       -> 2026-01-01 - 2026-12-31
 ```
 
-这里的 `p50_ms / p95_ms / p99_ms / max_ms` 是单条 query 的端到端耗时分布，包含：
+餐段词如“早餐、午餐、晚餐”只影响 `granularity` 和 `meal_period`，日期仍然输出区间：
 
-- normalize
-- query 纠错
-- 时间提取
-- ONNX 二分类推理
-- 阈值决策
-
-不是 300 条数据的总耗时。
+```json
+{
+  "raw": "本周午餐",
+  "granularity": "meal_period",
+  "meal_period": "lunch",
+  "start": "2026-04-27",
+  "end": "2026-05-03"
+}
+```
 
 ## 数据格式
 
-`canteen_test_data_300.json` 中每条数据格式如下：
+`canteen_test_data_300.json` 每条数据：
 
 ```json
 {
@@ -182,17 +121,66 @@ under_50ms: 100.00%
 
 字段说明：
 
-- `q`：原始用户 query
+- `q`：原始 query
 - `domain`：期望二分类标签，`in_domain` 或 `out_domain`
 - `time`：是否期望抽取到时间
 - `corrected`：期望纠错后的 query
 
-## 生产接口说明
+## 安装依赖
 
-核心入口在 `production_gateway.py`：
+推荐 Python 3.10+。
+
+```powershell
+python -m pip install -r requirements-prod.txt
+```
+
+在 Codex 桌面环境中可以使用内置 Python：
+
+```powershell
+& 'C:\Users\MyPC\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m pip install -r requirements-prod.txt
+```
+
+## 离线训练与导出
+
+```powershell
+python train_export_domain_classifier.py --data canteen_test_data_300.json
+```
+
+训练脚本会：
+
+1. 读取测试数据
+2. 使用 `corrected` 文本训练二分类模型
+3. 输出验证集指标
+4. 导出 ONNX
+5. 量化为 ONNX INT8
+
+## 生产推理评测
+
+```powershell
+python production_gateway.py --data canteen_test_data_300.json
+```
+
+本地没有模型产物时可以做规则 fallback 烟测：
+
+```powershell
+python production_gateway.py --data canteen_test_data_300.json --allow-rule-fallback
+```
+
+`--allow-rule-fallback` 不能用于生产。
+
+## 一键运行
+
+Windows PowerShell：
+
+```powershell
+.\train_and_eval.ps1
+```
+
+## 生产接口示例
 
 ```python
 from pathlib import Path
+
 from production_gateway import OnnxBertBinaryClassifier, ProductionCanteenGateway
 
 classifier = OnnxBertBinaryClassifier(
@@ -201,34 +189,55 @@ classifier = OnnxBertBinaryClassifier(
 )
 gateway = ProductionCanteenGateway(classifier, threshold=0.5)
 
-result = gateway.handle("今天中午二食堂有宫爆鸡丁吗")
-print(result)
+result = gateway.handle("上个月饭卡消费明细")
+print(result.domain)
+print(result.time)
 ```
 
-返回字段：
+返回核心字段：
 
 ```text
 domain              # in_domain / out_domain
-domain_score        # 模型输出的 in-domain 概率
+domain_score        # in-domain 概率
 original_query      # 原始 query
-corrected_query     # 纠错后 query
+corrected_query     # 纠错后的 query
 correction_applied  # 是否发生纠错
 corrections         # 纠错明细
-time                # 时间提取结果，没有则为 None
-latency_ms          # 单条端到端耗时
+time                # 日期级时间区间，未命中则为 None
+latency_ms          # 单条端到端时延
 ```
 
-## 上线注意事项
+## 测试
 
-`canteen_test_data_300.json` 是假数据，只能证明代码链路和时延，不代表真实线上准确率。
+时间区间测试：
 
-真实上线前至少需要：
+```powershell
+python test_time_ranges.py
+```
 
-- 1 万到 2 万条食堂业务正样本
-- 1 万到 2 万条非食堂负样本
-- 3000 到 5000 条混淆负样本
-- 独立测试集，不能参与训练
-- 按食堂、档口、菜名、支付、退款、投诉、营业时间等业务域分层评估
+生产入口评测：
+
+```powershell
+python production_gateway.py --data canteen_test_data_300.json
+```
+
+当前 300 条测试数据的 ONNX INT8 生产入口结果：
+
+```text
+domain_accuracy:     100.00% (300/300)
+time_accuracy:       100.00% (300/300)
+correction_accuracy: 100.00% (300/300)
+p50_ms: 5.3387
+p95_ms: 6.0502
+p99_ms: 6.4429
+under_50ms: 100.00%
+```
+
+这些时延是单条 query 的端到端耗时分布，不是总耗时。
+
+## 上线注意
+
+`canteen_test_data_300.json` 是测试数据，只用于验证工程链路和时延。正式上线请使用真实标注数据重新训练并替换 `artifacts/` 下的模型。
 
 建议上线门槛：
 
@@ -239,13 +248,4 @@ out_domain_precision >= 90%
 p95_latency <= 50ms
 ```
 
-## 重要说明
-
-当前仓库里的模型是用 300 条假数据训练出来的演示模型。它适合验证：
-
-- 工程链路是否完整
-- ONNX INT8 推理是否可用
-- 端到端时延是否满足 50ms
-- 数据格式和评测方式是否清晰
-
-它不适合作为最终线上业务模型。上线时请用真实标注数据重新训练并替换 `artifacts/` 下的模型产物。
+如果加入图像分类、OCR 或 VLM，请将视觉模型作为离线训练、在线推理模块接入，并单独统计视觉推理耗时。
