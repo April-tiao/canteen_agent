@@ -1,0 +1,67 @@
+{
+  "note": "Image experiments use train/chart, train/food as in_domain and train/fruit as out_domain by default. FastVLM is a contrast group, not a 50ms candidate.",
+  "results": [
+    {
+      "scheme": "MobileNetV3-Small",
+      "device": "cpu",
+      "accuracy": 1.0,
+      "latency_ms": {
+        "end_to_end_image_open_preprocess_model": {
+          "avg": 23.11406,
+          "p50": 10.79495,
+          "p95": 95.5104,
+          "p99": 113.6047,
+          "max": 113.8078,
+          "under_50ms": 0.92
+        },
+        "model_only_preprocessed_tensor": {
+          "avg": 6.869126,
+          "p50": 6.79185,
+          "p95": 7.9724,
+          "p99": 8.3988,
+          "max": 8.7693,
+          "under_50ms": 1.0
+        }
+      },
+      "source": "artifacts\\mobilenetv3_small_160_results.json"
+    },
+    {
+      "scheme": "MobileCLIP2-S0 frozen image encoder + linear probe",
+      "device": "cpu",
+      "accuracy": 1.0,
+      "latency_ms": {
+        "end_to_end_image_open_preprocess_model": {
+          "avg": 97.606205,
+          "p50": 79.9808,
+          "p95": 167.2536,
+          "p99": 267.8558,
+          "max": 267.8558,
+          "under_50ms": 0.0
+        },
+        "model_only_preprocessed_tensor": {
+          "avg": 80.8237925,
+          "p50": 77.78354999999999,
+          "p95": 107.9394,
+          "p99": 136.2689,
+          "max": 136.2689,
+          "under_50ms": 0.0
+        }
+      },
+      "source": "artifacts\\mobileclip2_s0_linear_probe_results.json"
+    },
+    {
+      "scheme": "FastVLM-0.5B contrast group",
+      "device": "cpu",
+      "accuracy": 0.0,
+      "latency_ms": {
+        "avg": 6021.1034500000005,
+        "p50": 6000.606400000001,
+        "p95": 6155.4329,
+        "p99": 6155.4329,
+        "max": 6155.4329,
+        "under_50ms": 0.0
+      },
+      "source": "artifacts\\fastvlm_0_5b_contrast_results.json"
+    }
+  ]
+}

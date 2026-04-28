@@ -1,0 +1,42 @@
+{
+  "scheme": "MobileNetV3-Small",
+  "device": "cpu",
+  "train_size": 70,
+  "test_size": 24,
+  "accuracy": 1.0,
+  "classification_report": {
+    "out_domain": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 2.0
+    },
+    "in_domain": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 22.0
+    },
+    "accuracy": 1.0,
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 24.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 24.0
+    }
+  },
+  "latency_ms": {
+    "avg": 28.792785000000002,
+    "p50": 15.1965,
+    "p95": 105.3418,
+    "p99": 117.2142,
+    "max": 138.741,
+    "under_50ms": 0.9
+  }
+}

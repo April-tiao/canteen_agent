@@ -249,3 +249,130 @@ p95_latency <= 50ms
 ```
 
 如果加入图像分类、OCR 或 VLM，请将视觉模型作为离线训练、在线推理模块接入，并单独统计视觉推理耗时。
+
+## 图像/图文实验
+
+新增实验数据：
+
+```text
+train/chart  -> 默认 in_domain
+train/food   -> 默认 in_domain
+train/fruit  -> 默认 out_domain
+ai_agent_records_202604280912.json -> 文本正样本
+canteen_test_data_300.json         -> 文本负样本来源
+```
+
+构建统一 manifest：
+
+```powershell
+python multimodal_dataset.py
+```
+
+默认输出：
+
+```text
+artifacts/multimodal_manifest.json
+```
+
+当前 manifest 统计：
+
+```text
+images: 94
+texts: 404
+image_positive: 86
+image_negative: 8
+text_positive: 284
+text_negative: 120
+```
+
+### 方案一：MobileNetV3-Small
+
+轻量图像分类候选，最适合 50ms 线上路径。
+
+```powershell
+python run_image_mobilenetv3_experiment.py --epochs 6 --image-size 160 --latency-repeats 100
+```
+
+当前 CPU 结果：
+
+```text
+accuracy: 100.00%
+
+end_to_end_image_open_preprocess_model:
+p50_ms: 10.79
+p95_ms: 95.51
+under_50ms: 92.00%
+
+model_only_preprocessed_tensor:
+p50_ms: 6.79
+p95_ms: 7.97
+under_50ms: 100.00%
+```
+
+结论：模型本体满足 50ms；端到端尾延迟主要来自图片打开、解码和预处理。线上若必须 50ms，需要优化图片输入链路，例如固定尺寸上传、服务侧高性能解码、预处理线程池、ONNX/TensorRT/OpenVINO。
+
+### 方案二：MobileCLIP2-S0 Frozen Image Encoder + Linear Probe
+
+图文双塔小模型对照方案，当前只冻结 image encoder，再训练线性分类器。
+
+```powershell
+python run_mobileclip_linear_probe.py --latency-repeats 40
+```
+
+当前 CPU 结果：
+
+```text
+accuracy: 100.00%
+
+end_to_end_image_open_preprocess_model:
+p50_ms: 79.98
+p95_ms: 167.25
+under_50ms: 0.00%
+
+model_only_preprocessed_tensor:
+p50_ms: 77.78
+p95_ms: 107.94
+under_50ms: 0.00%
+```
+
+结论：MobileCLIP2-S0 准确率可以作为对照，但 CPU 推理不满足 50ms。若要上线，需要 GPU、ONNX 优化或更小的图像 encoder。
+
+### 方案三：FastVLM-0.5B + 二分类头对照组
+
+FastVLM 只作为 VL 小模型准确率上限/统一图文入口对照，不作为 50ms 线上候选。
+
+当前脚本：
+
+```powershell
+python run_fastvlm_contrast.py --sample-size 4 --trust-remote-code
+```
+
+当前 CPU 极小样本结果：
+
+```text
+p50_ms: 6000.61
+p95_ms: 6155.43
+under_50ms: 0.00%
+```
+
+结论：CPU 上完全不满足 50ms。后续如果要严肃评估准确率上限，应离线训练 FastVLM hidden state 的二分类头，而不是让模型生成 `in_domain/out_domain` 字符串。
+
+### 汇总结果
+
+```powershell
+python summarize_multimodal_results.py
+```
+
+输出：
+
+```text
+artifacts/multimodal_experiment_summary.json
+```
+
+当前线上建议：
+
+```text
+50ms 主路径：文本 ONNX + MobileNetV3-Small 图像分类
+准确率/泛化对照：MobileCLIP2-S0
+VL 上限对照：FastVLM-0.5B
+```

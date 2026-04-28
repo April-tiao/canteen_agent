@@ -9,3 +9,4 @@ env/
 .env
 *.log
 .tools/
+artifacts/model_cache/
