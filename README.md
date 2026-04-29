@@ -300,9 +300,120 @@ Codex 桌面环境可使用：
 & 'C:\Users\MyPC\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' -m pip install -r requirements-prod.txt
 ```
 
+## Docker Runtime Image
+
+运行时镜像只包含线上推理必需内容：
+
+```text
+Python 3.12 slim
+FastAPI + Uvicorn
+ONNX Runtime CPU
+OpenCV headless
+Transformers tokenizer
+Text ONNX INT8 model
+MobileNetV3-Small image ONNX model
+```
+
+不会打入镜像的内容：
+
+```text
+train/
+artifacts/model_cache/
+PyTorch 训练依赖
+MobileCLIP / FastVLM 权重缓存
+artifacts/domain_classifier_hf/model.safetensors
+artifacts/domain_classifier.onnx
+实验结果 JSON
+```
+
+构建镜像：
+
+```powershell
+docker build -t canteen-agent:latest .
+```
+
+启动：
+
+```powershell
+docker run --rm -p 8000:8000 canteen-agent:latest
+```
+
+或者：
+
+```powershell
+docker compose up --build
+```
+
+健康检查：
+
+```powershell
+curl http://localhost:8000/health
+```
+
+文本意图：
+
+```powershell
+curl -X POST http://localhost:8000/intent/text ^
+  -H "Content-Type: application/json" ^
+  -d "{\"query\":\"上个月饭卡消费明细\"}"
+```
+
+图片上传：
+
+```powershell
+curl -X POST "http://localhost:8000/intent/image-upload?query=这个菜多少钱" ^
+  -F "file=@train/food/102212730132004591.jpg"
+```
+
+图片 base64：
+
+```json
+POST /intent/image-base64
+{
+  "query": "这个菜多少钱",
+  "image_base64": "..."
+}
+```
+
+运行时环境变量：
+
+```text
+TEXT_MODEL_PATH=artifacts/domain_classifier_int8.onnx
+TEXT_TOKENIZER_PATH=artifacts/domain_classifier_hf
+VISION_MODEL_PATH=artifacts/vision_mobilenetv3_small_160.onnx
+TEXT_THRESHOLD=0.5
+VISION_THRESHOLD=0.5
+IMAGE_SIZE=160
+DECODE_REDUCTION=2
+ORT_INTRA_THREADS=1
+ORT_INTER_THREADS=1
+CV_THREADS=1
+```
+
+镜像仓库页面里如果选择“URL 上传”，可以先在本地或 CI 构建后推送到你的镜像仓库；如果选择“tar 包”，可生成：
+
+```powershell
+docker save canteen-agent:latest -o canteen-agent.tar
+```
+
 ## Push / Change Log
 
 每次推送都需要在 README 记录修改点。
+
+### 2026-04-29 Docker Runtime
+
+- 新增 `Dockerfile`
+- 新增 `.dockerignore`
+- 新增 `docker-compose.yml`
+- 新增 `requirements-runtime.txt`
+- 新增 `serve_api.py`
+- 镜像运行时只保留线上推理依赖，排除训练数据、PyTorch 训练环境、模型缓存和实验大文件
+- 暴露 FastAPI 服务：
+  - `GET /health`
+  - `POST /intent/text`
+  - `POST /intent/image-upload`
+  - `POST /intent/image-base64`
+  - `POST /time/extract`
 
 ### 2026-04-29
 
