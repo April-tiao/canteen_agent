@@ -6,6 +6,8 @@ from typing import Any
 
 
 RESULT_FILES = [
+    Path("artifacts/mobilenetv3_onnx_opencv_160_results.json"),
+    Path("artifacts/mobilenetv3_onnx_opencv_160_path_results.json"),
     Path("artifacts/mobilenetv3_small_160_results.json"),
     Path("artifacts/mobileclip2_s0_linear_probe_results.json"),
     Path("artifacts/fastvlm_0_5b_contrast_results.json"),

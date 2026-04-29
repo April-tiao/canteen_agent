@@ -1,0 +1,80 @@
+{
+  "scheme": "MobileNetV3-Small ONNX Runtime + OpenCV bytes pipeline",
+  "input_mode": "bytes",
+  "image_size": 160,
+  "onnx": "artifacts/vision_mobilenetv3_small_160.onnx",
+  "test_size": 24,
+  "repeats": 300,
+  "ort": {
+    "intra_threads": 1,
+    "inter_threads": 1,
+    "execution_mode": "sequential"
+  },
+  "opencv": {
+    "cv_threads": 1,
+    "decode_reduction": 2,
+    "preprocess": "cv2.imdecode + cv2.dnn.blobFromImage + per-channel normalize"
+  },
+  "accuracy": 1.0,
+  "classification_report": {
+    "out_domain": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 25.0
+    },
+    "in_domain": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 275.0
+    },
+    "accuracy": 1.0,
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 300.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 300.0
+    }
+  },
+  "latency_ms": {
+    "read": {
+      "avg": 0.0009806666666666666,
+      "p50": 0.0009,
+      "p95": 0.0018,
+      "p99": 0.0027,
+      "max": 0.0029,
+      "under_50ms": 1.0
+    },
+    "preprocess": {
+      "avg": 7.243009333333333,
+      "p50": 1.4437,
+      "p95": 41.0074,
+      "p99": 42.1328,
+      "max": 47.0709,
+      "under_50ms": 1.0
+    },
+    "model": {
+      "avg": 1.9104056666666667,
+      "p50": 1.7824,
+      "p95": 2.6511,
+      "p99": 4.1692,
+      "max": 4.8596,
+      "under_50ms": 1.0
+    },
+    "total": {
+      "avg": 9.15764,
+      "p50": 3.7166,
+      "p95": 43.111,
+      "p99": 44.6502,
+      "max": 48.8557,
+      "under_50ms": 1.0
+    }
+  }
+}

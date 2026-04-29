@@ -2,6 +2,86 @@
   "note": "Image experiments use train/chart, train/food as in_domain and train/fruit as out_domain by default. FastVLM is a contrast group, not a 50ms candidate.",
   "results": [
     {
+      "scheme": "MobileNetV3-Small ONNX Runtime + OpenCV bytes pipeline",
+      "device": null,
+      "accuracy": 1.0,
+      "latency_ms": {
+        "read": {
+          "avg": 0.0009806666666666666,
+          "p50": 0.0009,
+          "p95": 0.0018,
+          "p99": 0.0027,
+          "max": 0.0029,
+          "under_50ms": 1.0
+        },
+        "preprocess": {
+          "avg": 7.243009333333333,
+          "p50": 1.4437,
+          "p95": 41.0074,
+          "p99": 42.1328,
+          "max": 47.0709,
+          "under_50ms": 1.0
+        },
+        "model": {
+          "avg": 1.9104056666666667,
+          "p50": 1.7824,
+          "p95": 2.6511,
+          "p99": 4.1692,
+          "max": 4.8596,
+          "under_50ms": 1.0
+        },
+        "total": {
+          "avg": 9.15764,
+          "p50": 3.7166,
+          "p95": 43.111,
+          "p99": 44.6502,
+          "max": 48.8557,
+          "under_50ms": 1.0
+        }
+      },
+      "source": "artifacts\\mobilenetv3_onnx_opencv_160_results.json"
+    },
+    {
+      "scheme": "MobileNetV3-Small ONNX Runtime + OpenCV bytes pipeline",
+      "device": null,
+      "accuracy": 1.0,
+      "latency_ms": {
+        "read": {
+          "avg": 0.3653943333333333,
+          "p50": 0.2165,
+          "p95": 1.4408,
+          "p99": 1.8424,
+          "max": 2.4339,
+          "under_50ms": 1.0
+        },
+        "preprocess": {
+          "avg": 7.49678,
+          "p50": 1.45825,
+          "p95": 42.4605,
+          "p99": 44.8092,
+          "max": 58.2047,
+          "under_50ms": 0.9966666666666667
+        },
+        "model": {
+          "avg": 1.915029,
+          "p50": 1.816,
+          "p95": 2.547,
+          "p99": 4.3439,
+          "max": 5.1613,
+          "under_50ms": 1.0
+        },
+        "total": {
+          "avg": 9.78027,
+          "p50": 3.919,
+          "p95": 46.0568,
+          "p99": 48.3117,
+          "max": 61.4676,
+          "under_50ms": 0.9933333333333333
+        }
+      },
+      "source": "artifacts\\mobilenetv3_onnx_opencv_160_path_results.json"
+    },
+    {
       "scheme": "MobileNetV3-Small",
       "device": "cpu",
       "accuracy": 1.0,
