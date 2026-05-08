@@ -1,0 +1,178 @@
+{
+  "source_data": "data\\canteen_query_dataset.json",
+  "source_split": "train",
+  "min_count": 1,
+  "total_pairs": 34,
+  "corrections": [
+    {
+      "wrong": "上衣个月",
+      "correct": "上一个月",
+      "count": 83
+    },
+    {
+      "wrong": "食唐",
+      "correct": "食堂",
+      "count": 78
+    },
+    {
+      "wrong": "学效",
+      "correct": "学校",
+      "count": 73
+    },
+    {
+      "wrong": "记绿",
+      "correct": "记录",
+      "count": 59
+    },
+    {
+      "wrong": "晴况",
+      "correct": "情况",
+      "count": 46
+    },
+    {
+      "wrong": "统记",
+      "correct": "统计",
+      "count": 39
+    },
+    {
+      "wrong": "今粘",
+      "correct": "今年",
+      "count": 36
+    },
+    {
+      "wrong": "数居",
+      "correct": "数据",
+      "count": 35
+    },
+    {
+      "wrong": "今添",
+      "correct": "今天",
+      "count": 33
+    },
+    {
+      "wrong": "上个玥",
+      "correct": "上个月",
+      "count": 30
+    },
+    {
+      "wrong": "去粘",
+      "correct": "去年",
+      "count": 29
+    },
+    {
+      "wrong": "昨添",
+      "correct": "昨天",
+      "count": 25
+    },
+    {
+      "wrong": "上寄度",
+      "correct": "上季度",
+      "count": 23
+    },
+    {
+      "wrong": "最进一个月",
+      "correct": "最近一个月",
+      "count": 23
+    },
+    {
+      "wrong": "笨季度",
+      "correct": "本季度",
+      "count": 22
+    },
+    {
+      "wrong": "学身",
+      "correct": "学生",
+      "count": 19
+    },
+    {
+      "wrong": "最进一周",
+      "correct": "最近一周",
+      "count": 18
+    },
+    {
+      "wrong": "台帐",
+      "correct": "台账",
+      "count": 17
+    },
+    {
+      "wrong": "流样",
+      "correct": "留样",
+      "count": 16
+    },
+    {
+      "wrong": "排明",
+      "correct": "排名",
+      "count": 15
+    },
+    {
+      "wrong": "查洵",
+      "correct": "查询",
+      "count": 15
+    },
+    {
+      "wrong": "风显",
+      "correct": "风险",
+      "count": 13
+    },
+    {
+      "wrong": "成夲",
+      "correct": "成本",
+      "count": 10
+    },
+    {
+      "wrong": "收如",
+      "correct": "收入",
+      "count": 8
+    },
+    {
+      "wrong": "辰检",
+      "correct": "晨检",
+      "count": 7
+    },
+    {
+      "wrong": "采够",
+      "correct": "采购",
+      "count": 5
+    },
+    {
+      "wrong": "食才",
+      "correct": "食材",
+      "count": 5
+    },
+    {
+      "wrong": "莹养",
+      "correct": "营养",
+      "count": 4
+    },
+    {
+      "wrong": "利闰",
+      "correct": "利润",
+      "count": 4
+    },
+    {
+      "wrong": "枝出",
+      "correct": "支出",
+      "count": 3
+    },
+    {
+      "wrong": "消度",
+      "correct": "消毒",
+      "count": 3
+    },
+    {
+      "wrong": "供映商",
+      "correct": "供应商",
+      "count": 2
+    },
+    {
+      "wrong": "头诉",
+      "correct": "投诉",
+      "count": 1
+    },
+    {
+      "wrong": "洁算",
+      "correct": "结算",
+      "count": 1
+    }
+  ]
+}

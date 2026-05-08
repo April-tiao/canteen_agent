@@ -1,0 +1,91 @@
+{
+  "task": "3-class transfer learning image classification",
+  "labels": {
+    "0": "other",
+    "1": "food",
+    "2": "chart"
+  },
+  "model": "MobileNetV3-Small",
+  "pretrained": "torchvision ImageNet weights",
+  "image_size": 160,
+  "epochs": 5,
+  "device": "CPU only",
+  "dataset_summary": {
+    "total": 3501,
+    "by_split": {
+      "train": 2799,
+      "test": 702
+    },
+    "by_label": {
+      "0": 1167,
+      "1": 1167,
+      "2": 1167
+    },
+    "by_split_label": {
+      "train_0": 933,
+      "train_1": 933,
+      "train_2": 933,
+      "test_0": 234,
+      "test_1": 234,
+      "test_2": 234
+    }
+  },
+  "checkpoint": "cv-2/outputs_mnv3_3class_160/best_model.pt",
+  "best_epoch": 4,
+  "test_metrics": {
+    "loss": 0.05648602067660063,
+    "accuracy": 0.9814814814814815,
+    "macro_precision": 0.9815647261115205,
+    "macro_recall": 0.9814814814814815,
+    "macro_f1": 0.9814869161164098,
+    "per_class": {
+      "0_other": {
+        "precision": 0.991304347826087,
+        "recall": 0.9743589743589743,
+        "f1": 0.9827586206896551,
+        "support": 234
+      },
+      "1_food": {
+        "precision": 0.9745762711864406,
+        "recall": 0.9829059829059829,
+        "f1": 0.978723404255319,
+        "support": 234
+      },
+      "2_chart": {
+        "precision": 0.9788135593220338,
+        "recall": 0.9871794871794872,
+        "f1": 0.9829787234042553,
+        "support": 234
+      }
+    },
+    "confusion_matrix": [
+      [
+        228,
+        4,
+        2
+      ],
+      [
+        1,
+        230,
+        3
+      ],
+      [
+        1,
+        2,
+        231
+      ]
+    ]
+  },
+  "latency": {
+    "device": "cpu",
+    "samples": 120,
+    "image_size": 160,
+    "mean_ms": 8.922923331071312,
+    "p50_ms": 8.824600139632821,
+    "p90_ms": 10.29130001552403,
+    "p95_ms": 11.23049994930625,
+    "p99_ms": 13.901400147005916,
+    "min_ms": 6.394500145688653,
+    "max_ms": 14.340100111439824
+  }
+}

@@ -1,0 +1,6652 @@
+{
+  "summary": {
+    "task": "full_text_pipeline",
+    "labels": {
+      "0": "out_domain",
+      "1": "in_domain"
+    },
+    "data": "data\\canteen_query_dataset.json",
+    "split": "test",
+    "test_size": 200,
+    "threshold": 0.5,
+    "intent_accuracy": 1.0,
+    "time_accuracy": 1.0,
+    "correction_accuracy": 0.855,
+    "confusion": {
+      "tp": 120,
+      "tn": 80,
+      "fp": 0,
+      "fn": 0
+    },
+    "latency": {
+      "avg_ms": 9.0955435,
+      "p50_ms": 8.926100000000002,
+      "p95_ms": 13.1374,
+      "p99_ms": 17.2525,
+      "max_ms": 20.3963,
+      "under_50ms": 1.0
+    },
+    "by_source": {
+      "generated_negative": {
+        "total": 80,
+        "intent_correct": 80,
+        "time_correct": 80,
+        "correction_correct": 80
+      },
+      "generated_from_excel": {
+        "total": 61,
+        "intent_correct": 61,
+        "time_correct": 61,
+        "correction_correct": 61
+      },
+      "existing_json": {
+        "total": 59,
+        "intent_correct": 59,
+        "time_correct": 59,
+        "correction_correct": 30
+      }
+    }
+  },
+  "details": [
+    {
+      "id": "test_0001",
+      "source": "generated_negative",
+      "query": "本季度白云区第一小学效服尺码统计有没有异常，原因是什么",
+      "normalized_query": "本季度白云区第一小学效服尺码统计有没有异常，原因是什么",
+      "expected_corrected_query": "本季度白云区第一小学校服尺码统计有没有异常，原因是什么",
+      "predicted_corrected_query": "本季度白云区第一小学校服尺码统计有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003914,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "predicted_time": {
+        "raw": "本季度",
+        "granularity": "quarter",
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "latency_ms": 8.1696,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0002",
+      "source": "generated_negative",
+      "query": "帮我查看最进一周白云区校园广播节目的数据明细",
+      "normalized_query": "帮我查看最进一周白云区校园广播节目的数据明细",
+      "expected_corrected_query": "帮我查看最近一周白云区校园广播节目的数据明细",
+      "predicted_corrected_query": "帮我查看最近一周白云区校园广播节目的数据明细",
+      "corrections": [
+        {
+          "from": "最进一周",
+          "to": "最近一周",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003555,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 7.9088,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0003",
+      "source": "generated_from_excel",
+      "query": "请统计最近一个月空港实验中学食唐的晨检合格情况，并说明是否存在异常",
+      "normalized_query": "请统计最近一个月空港实验中学食唐的晨检合格情况，并说明是否存在异常",
+      "expected_corrected_query": "请统计最近一个月空港实验中学食堂的晨检合格情况，并说明是否存在异常",
+      "predicted_corrected_query": "请统计最近一个月空港实验中学食堂的晨检合格情况，并说明是否存在异常",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996441,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.5105,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0004",
+      "source": "existing_json",
+      "query": "请核查广州市白云中学附属小学2026年第一季度食堂设备定期维护清洗台帐中，油烟净化器、冰箱、消毒柜等重点设备的清洗频次是否达到每月至少一次？未达标设备有哪些",
+      "normalized_query": "请核查广州市白云中学附属小学2026年第一季度食堂设备定期维护清洗台帐中，油烟净化器、冰箱、消毒柜等重点设备的清洗频次是否达到每月至少一次?未达标设备有哪些",
+      "expected_corrected_query": "请核查广州市白云中学附属小学2026年第一季度食堂设备定期维护清洗台账中，油烟净化器、冰箱、消毒柜等重点设备的清洗频次是否达到每月至少一次？未达标设备有哪些",
+      "predicted_corrected_query": "请核查广州市白云中学附属小学2026年第一季度食堂设备定期维护清洗台账中，油烟净化器、冰箱、消毒柜等重点设备的清洗频次是否达到每月至少一次?未达标设备有哪些",
+      "corrections": [
+        {
+          "from": "台帐",
+          "to": "台账",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996268,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "2026年第一季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 7.6905,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0005",
+      "source": "generated_negative",
+      "query": "导出去粘全市校车路线优化清单，按数量排序",
+      "normalized_query": "导出去粘全市校车路线优化清单，按数量排序",
+      "expected_corrected_query": "导出去年全市校车路线优化清单，按数量排序",
+      "predicted_corrected_query": "导出去年全市校车路线优化清单，按数量排序",
+      "corrections": [
+        {
+          "from": "去粘",
+          "to": "去年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003335,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 6.5145,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0006",
+      "source": "existing_json",
+      "query": "我想了解上衣个月帮我审查一下第三中学提交的整改报告，看看他们针对上次的消毒问题整改到位了没有？",
+      "normalized_query": "我想了解上衣个月帮我审查一下第三中学提交的整改报告，看看他们针对上次的消毒问题整改到位了没有?",
+      "expected_corrected_query": "我想了解上一个月帮我审查一下第三中学提交的整改报告，看看他们针对上次的消毒问题整改到位了没有？",
+      "predicted_corrected_query": "我想了解上一个月帮我审查一下第三中学提交的整改报告，看看他们针对上次的消毒问题整改到位了没有?",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995221,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.0452,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0007",
+      "source": "generated_from_excel",
+      "query": "帮我查看去年黄埔区学校食堂总收入占比台帐完整率和问题明细",
+      "normalized_query": "帮我查看去年黄埔区学校食堂总收入占比台帐完整率和问题明细",
+      "expected_corrected_query": "帮我查看去年黄埔区学校食堂总收入占比台账完整率和问题明细",
+      "predicted_corrected_query": "帮我查看去年黄埔区学校食堂总收入占比台账完整率和问题明细",
+      "corrections": [
+        {
+          "from": "台帐",
+          "to": "台账",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996302,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 7.903,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0008",
+      "source": "generated_from_excel",
+      "query": "我想知道去年花城实验学校食唐利润的总量、占比和变化原因",
+      "normalized_query": "我想知道去年花城实验学校食唐利润的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道去年花城实验学校食堂利润的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道去年花城实验学校食堂利润的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996595,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 9.7672,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0009",
+      "source": "generated_negative",
+      "query": "帮我查看上衣个月荔湾区招生报名进度的数据明细",
+      "normalized_query": "帮我查看上衣个月荔湾区招生报名进度的数据明细",
+      "expected_corrected_query": "帮我查看上一个月荔湾区招生报名进度的数据明细",
+      "predicted_corrected_query": "帮我查看上一个月荔湾区招生报名进度的数据明细",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.004153,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.1441,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0010",
+      "source": "existing_json",
+      "query": "我想了解上衣个月这个月的‘营业收入-其他收入’里有一笔钱对不上，帮我查一下来源",
+      "normalized_query": "我想了解上衣个月这个月的‘营业收入-其他收入’里有一笔钱对不上，帮我查一下来源",
+      "expected_corrected_query": "我想了解上一个月这个月的‘营业收入-其他收入’里有一笔钱对不上，帮我查一下来源",
+      "predicted_corrected_query": "我想了解上一个月这个月的‘营业收入-其他收入’里有一笔钱对不上，帮我查一下来源",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996101,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 11.1913,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0011",
+      "source": "generated_from_excel",
+      "query": "请统记上季度云山中学食堂的风险管控清单情况，并说明是否存在异常",
+      "normalized_query": "请统记上季度云山中学食堂的风险管控清单情况，并说明是否存在异常",
+      "expected_corrected_query": "请统计上季度云山中学食堂的风险管控清单情况，并说明是否存在异常",
+      "predicted_corrected_query": "请统计上季度云山中学食堂的风险管控清单情况，并说明是否存在异常",
+      "corrections": [
+        {
+          "from": "统记",
+          "to": "统计",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995521,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "上季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 9.7616,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0012",
+      "source": "generated_negative",
+      "query": "本季度花城实验学效实验室仪器借用有没有异常，原因是什么",
+      "normalized_query": "本季度花城实验学效实验室仪器借用有没有异常，原因是什么",
+      "expected_corrected_query": "本季度花城实验学校实验室仪器借用有没有异常，原因是什么",
+      "predicted_corrected_query": "本季度花城实验学校实验室仪器借用有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.004221,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "predicted_time": {
+        "raw": "本季度",
+        "granularity": "quarter",
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "latency_ms": 8.37,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0013",
+      "source": "generated_negative",
+      "query": "帮我查看最进一个月全市校园网故障的数据明细",
+      "normalized_query": "帮我查看最进一个月全市校园网故障的数据明细",
+      "expected_corrected_query": "帮我查看最近一个月全市校园网故障的数据明细",
+      "predicted_corrected_query": "帮我查看最近一个月全市校园网故障的数据明细",
+      "corrections": [
+        {
+          "from": "最进一个月",
+          "to": "最近一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.004259,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 6.3147,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0014",
+      "source": "existing_json",
+      "query": "请核查广州市白云区云英实验附属小学2026年第一季度食唐刀具管理台账，每日刀具消毒记录是否完整？是否存在“已消毒”但无消毒方式（如煮沸、紫外线）及消毒时长记录的情况？",
+      "normalized_query": "请核查广州市白云区云英实验附属小学2026年第一季度食唐刀具管理台账，每日刀具消毒记录是否完整?是否存在“已消毒”但无消毒方式（如煮沸、紫外线）及消毒时长记录的情况?",
+      "expected_corrected_query": "请核查广州市白云区云英实验附属小学2026年第一季度食堂刀具管理台账，每日刀具消毒记录是否完整？是否存在“已消毒”但无消毒方式（如煮沸、紫外线）及消毒时长记录的情况？",
+      "predicted_corrected_query": "请核查广州市白云区云英实验附属小学2026年第一季度食堂刀具管理台账，每日刀具消毒记录是否完整?是否存在“已消毒”但无消毒方式（如煮沸、紫外线）及消毒时长记录的情况?",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.99627,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "2026年第一季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 8.5157,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0015",
+      "source": "generated_negative",
+      "query": "帮我查看上一个月天河区校园绿化养护的数居明细",
+      "normalized_query": "帮我查看上一个月天河区校园绿化养护的数居明细",
+      "expected_corrected_query": "帮我查看上一个月天河区校园绿化养护的数据明细",
+      "predicted_corrected_query": "帮我查看上一个月天河区校园绿化养护的数据明细",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.004074,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.4798,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0016",
+      "source": "generated_from_excel",
+      "query": "我想知道最近一个月培英学校食唐晨检完成率的总量、占比和变化原因",
+      "normalized_query": "我想知道最近一个月培英学校食唐晨检完成率的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道最近一个月培英学校食堂晨检完成率的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道最近一个月培英学校食堂晨检完成率的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996552,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 8.023,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0017",
+      "source": "existing_json",
+      "query": "我想了解上一个月帮我调出全市所有学校食唐的食品安全等级分布图，我要看B级和C级的占比",
+      "normalized_query": "我想了解上一个月帮我调出全市所有学校食唐的食品安全等级分布图，我要看B级和C级的占比",
+      "expected_corrected_query": "我想了解上一个月帮我调出全市所有学校食堂的食品安全等级分布图，我要看B级和C级的占比",
+      "predicted_corrected_query": "我想了解上一个月帮我调出全市所有学校食堂的食品安全等级分布图，我要看B级和C级的占比",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996304,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.7547,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0018",
+      "source": "existing_json",
+      "query": "帮我看一下上一个月我觉得食唐的‘红烧排骨’定价18块太贵了，能不能便宜一点？",
+      "normalized_query": "帮我看一下上一个月我觉得食唐的‘红烧排骨’定价18块太贵了，能不能便宜一点?",
+      "expected_corrected_query": "帮我看一下上一个月我觉得食堂的‘红烧排骨’定价18块太贵了，能不能便宜一点？",
+      "predicted_corrected_query": "帮我看一下上一个月我觉得食堂的‘红烧排骨’定价18块太贵了，能不能便宜一点?",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996022,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.0392,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0019",
+      "source": "generated_from_excel",
+      "query": "查洵分析2026年1月荔湾区校园餐食安监管趋势，并和上一周期做对比",
+      "normalized_query": "查洵分析2026年1月荔湾区校园餐食安监管趋势，并和上一周期做对比",
+      "expected_corrected_query": "查询分析2026年1月荔湾区校园餐食安监管趋势，并和上一周期做对比",
+      "predicted_corrected_query": "查询分析2026年1月荔湾区校园餐食安监管趋势，并和上一周期做对比",
+      "corrections": [
+        {
+          "from": "查洵",
+          "to": "查询",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996518,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 9.3879,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0020",
+      "source": "existing_json",
+      "query": "学效要求我们每天填写陪餐记录，但是今天校长没来，我能不能代签？",
+      "normalized_query": "学效要求我们每天填写陪餐记录，但是今天校长没来，我能不能代签?",
+      "expected_corrected_query": "学校要求我们每天填写陪餐记录，但是今天校长没来，我能不能代签？",
+      "predicted_corrected_query": "学校要求我们每天填写陪餐记录，但是今天校长没来，我能不能代签?",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.994816,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 7.3729,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0021",
+      "source": "generated_negative",
+      "query": "导出笨季度番禺区期末考试安排清单，按数量排序",
+      "normalized_query": "导出笨季度番禺区期末考试安排清单，按数量排序",
+      "expected_corrected_query": "导出本季度番禺区期末考试安排清单，按数量排序",
+      "predicted_corrected_query": "导出本季度番禺区期末考试安排清单，按数量排序",
+      "corrections": [
+        {
+          "from": "笨季度",
+          "to": "本季度",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003196,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "predicted_time": {
+        "raw": "本季度",
+        "granularity": "quarter",
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "latency_ms": 13.1374,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0022",
+      "source": "generated_negative",
+      "query": "去粘空港实验中学教室投影仪维修有没有异常，原因是什么",
+      "normalized_query": "去粘空港实验中学教室投影仪维修有没有异常，原因是什么",
+      "expected_corrected_query": "去年空港实验中学教室投影仪维修有没有异常，原因是什么",
+      "predicted_corrected_query": "去年空港实验中学教室投影仪维修有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "去粘",
+          "to": "去年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003812,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 8.9876,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0023",
+      "source": "existing_json",
+      "query": "平沙培英学校2026年1月的食唐经营分析",
+      "normalized_query": "平沙培英学校2026年1月的食唐经营分析",
+      "expected_corrected_query": "平沙培英学校2026年1月的食堂经营分析",
+      "predicted_corrected_query": "平沙培英学校2026年1月的食堂经营分析",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996442,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 9.6865,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0024",
+      "source": "existing_json",
+      "query": "我想了解上一个月帮我分析一下白云区1月份的陪餐记绿",
+      "normalized_query": "我想了解上一个月帮我分析一下白云区1月份的陪餐记绿",
+      "expected_corrected_query": "我想了解上一个月帮我分析一下白云区1月份的陪餐记录",
+      "predicted_corrected_query": "我想了解上一个月帮我分析一下白云区1月份的陪餐记录",
+      "corrections": [
+        {
+          "from": "记绿",
+          "to": "记录",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996144,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.1744,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0025",
+      "source": "generated_negative",
+      "query": "帮我查看上个月荔湾区教师考勤统计的数居明细",
+      "normalized_query": "帮我查看上个月荔湾区教师考勤统计的数居明细",
+      "expected_corrected_query": "帮我查看上个月荔湾区教师考勤统计的数据明细",
+      "predicted_corrected_query": "帮我查看上个月荔湾区教师考勤统计的数据明细",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.00337,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.1269,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0026",
+      "source": "existing_json",
+      "query": "帮我看一下上衣个月给我写一篇关于珍惜粮食、杜绝浪费的国旗下演讲",
+      "normalized_query": "帮我看一下上衣个月给我写一篇关于珍惜粮食、杜绝浪费的国旗下演讲",
+      "expected_corrected_query": "帮我看一下上一个月给我写一篇关于珍惜粮食、杜绝浪费的国旗下演讲",
+      "predicted_corrected_query": "帮我看一下上一个月给我写一篇关于珍惜粮食、杜绝浪费的国旗下演讲",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.994973,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.733,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0027",
+      "source": "existing_json",
+      "query": "麻烦统计上衣个月广州市白云区新和片区3月份的餐标是多少",
+      "normalized_query": "麻烦统计上衣个月广州市白云区新和片区3月份的餐标是多少",
+      "expected_corrected_query": "麻烦统计上一个月广州市白云区新和片区3月份的餐标是多少",
+      "predicted_corrected_query": "麻烦统计上一个月广州市白云区新和片区3月份的餐标是多少",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996255,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.9794,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0028",
+      "source": "existing_json",
+      "query": "分析广州市白云区岭南花园小学2026年2月的会议纪要，当月食才到货合格率是否达到100%？若未达到，请列出不合格食材的名称、批次及处理结果。",
+      "normalized_query": "分析广州市白云区岭南花园小学2026年2月的会议纪要，当月食才到货合格率是否达到100%?若未达到，请列出不合格食材的名称、批次及处理结果。",
+      "expected_corrected_query": "分析广州市白云区岭南花园小学2026年2月的会议纪要，当月食材到货合格率是否达到100%？若未达到，请列出不合格食材的名称、批次及处理结果。",
+      "predicted_corrected_query": "分析广州市白云区岭南花园小学2026年2月的会议纪要，当月食材到货合格率是否达到100%?若未达到，请列出不合格食材的名称、批次及处理结果。",
+      "corrections": [
+        {
+          "from": "食才",
+          "to": "食材",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995709,
+      "expected_time": {
+        "start": "2026-02-01",
+        "end": "2026-02-28"
+      },
+      "predicted_time": {
+        "raw": "2026年2月",
+        "granularity": "month",
+        "start": "2026-02-01",
+        "end": "2026-02-28"
+      },
+      "latency_ms": 8.3318,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0029",
+      "source": "generated_from_excel",
+      "query": "我想知道上周培英学校食唐健康证有效率的总量、占比和变化原因",
+      "normalized_query": "我想知道上周培英学校食唐健康证有效率的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道上周培英学校食堂健康证有效率的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道上周培英学校食堂健康证有效率的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996478,
+      "expected_time": {
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "predicted_time": {
+        "raw": "上周",
+        "granularity": "week",
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "latency_ms": 9.3762,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0030",
+      "source": "generated_from_excel",
+      "query": "核对上个玥明德小学食堂公益捐款记录是否合规，缺失项有哪些",
+      "normalized_query": "核对上个玥明德小学食堂公益捐款记录是否合规，缺失项有哪些",
+      "expected_corrected_query": "核对上个月明德小学食堂公益捐款记录是否合规，缺失项有哪些",
+      "predicted_corrected_query": "核对上个月明德小学食堂公益捐款记录是否合规，缺失项有哪些",
+      "corrections": [
+        {
+          "from": "上个玥",
+          "to": "上个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.99592,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.0199,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0031",
+      "source": "existing_json",
+      "query": "把上个月各片区学效的资金拨付执行率做一个排名，我需要知道哪些学校的补贴款还没有花出去",
+      "normalized_query": "把上个月各片区学效的资金拨付执行率做一个排名，我需要知道哪些学校的补贴款还没有花出去",
+      "expected_corrected_query": "把上个月各片区学校的资金拨付执行率做一个排名，我需要知道哪些学校的补贴款还没有花出去",
+      "predicted_corrected_query": "把上个月各片区学校的资金拨付执行率做一个排名，我需要知道哪些学校的补贴款还没有花出去",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.993644,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 10.2852,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0032",
+      "source": "generated_negative",
+      "query": "帮我查看今添天河区教室投影仪维修的数据明细",
+      "normalized_query": "帮我查看今添天河区教室投影仪维修的数据明细",
+      "expected_corrected_query": "帮我查看今天天河区教室投影仪维修的数据明细",
+      "predicted_corrected_query": "帮我查看今天天河区教室投影仪维修的数据明细",
+      "corrections": [
+        {
+          "from": "今添",
+          "to": "今天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003506,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 6.8476,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0033",
+      "source": "generated_negative",
+      "query": "帮我查看今年白云区图书采够预算的数据明细",
+      "normalized_query": "帮我查看今年白云区图书采够预算的数据明细",
+      "expected_corrected_query": "帮我查看今年白云区图书采购预算的数据明细",
+      "predicted_corrected_query": "帮我查看今年白云区图书采购预算的数据明细",
+      "corrections": [
+        {
+          "from": "采够",
+          "to": "采购",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003237,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "predicted_time": {
+        "raw": "今年",
+        "granularity": "year",
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "latency_ms": 7.1539,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0034",
+      "source": "generated_from_excel",
+      "query": "导出今粘荔湾区各学校食堂体温异常人数排名，标出异常学校",
+      "normalized_query": "导出今粘荔湾区各学校食堂体温异常人数排名，标出异常学校",
+      "expected_corrected_query": "导出今年荔湾区各学校食堂体温异常人数排名，标出异常学校",
+      "predicted_corrected_query": "导出今年荔湾区各学校食堂体温异常人数排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "今粘",
+          "to": "今年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996062,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "predicted_time": {
+        "raw": "今年",
+        "granularity": "year",
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "latency_ms": 8.1255,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0035",
+      "source": "existing_json",
+      "query": "最近一周学身就餐人数波动比较大，能不能根据历史数据预测一下下周一的食材采购量",
+      "normalized_query": "最近一周学身就餐人数波动比较大，能不能根据历史数据预测一下下周一的食材采购量",
+      "expected_corrected_query": "最近一周学生就餐人数波动比较大，能不能根据历史数据预测一下下周一的食材采购量",
+      "predicted_corrected_query": "最近一周学生就餐人数波动比较大，能不能根据历史数据预测一下下周一的食材采购量",
+      "corrections": [
+        {
+          "from": "学身",
+          "to": "学生",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996178,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 10.0979,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0036",
+      "source": "generated_from_excel",
+      "query": "今天培英学校的30数居有没有风险，给出原因和整改建议",
+      "normalized_query": "今天培英学校的30数居有没有风险，给出原因和整改建议",
+      "expected_corrected_query": "今天培英学校的30数据有没有风险，给出原因和整改建议",
+      "predicted_corrected_query": "今天培英学校的30数据有没有风险，给出原因和整改建议",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.993702,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 8.0285,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0037",
+      "source": "generated_from_excel",
+      "query": "我想知道上一个月培英学校食唐教师补贴消费的总量、占比和变化原因",
+      "normalized_query": "我想知道上一个月培英学校食唐教师补贴消费的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道上一个月培英学校食堂教师补贴消费的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道上一个月培英学校食堂教师补贴消费的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996622,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.9891,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0038",
+      "source": "existing_json",
+      "query": "请给我排出上个玥出库金额前5的学校",
+      "normalized_query": "请给我排出上个玥出库金额前5的学校",
+      "expected_corrected_query": "请给我排出上个月出库金额前5的学校",
+      "predicted_corrected_query": "请给我排出上个月出库金额前5的学校",
+      "corrections": [
+        {
+          "from": "上个玥",
+          "to": "上个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.986812,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.5813,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0039",
+      "source": "generated_negative",
+      "query": "核对今粘全市图书馆借阅排行记录是否完整",
+      "normalized_query": "核对今粘全市图书馆借阅排行记录是否完整",
+      "expected_corrected_query": "核对今年全市图书馆借阅排行记录是否完整",
+      "predicted_corrected_query": "核对今年全市图书馆借阅排行记录是否完整",
+      "corrections": [
+        {
+          "from": "今粘",
+          "to": "今年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003363,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "predicted_time": {
+        "raw": "今年",
+        "granularity": "year",
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "latency_ms": 7.4014,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0040",
+      "source": "generated_negative",
+      "query": "我想了解上个玥云山中学体育课排课的变化趋势",
+      "normalized_query": "我想了解上个玥云山中学体育课排课的变化趋势",
+      "expected_corrected_query": "我想了解上个月云山中学体育课排课的变化趋势",
+      "predicted_corrected_query": "我想了解上个月云山中学体育课排课的变化趋势",
+      "corrections": [
+        {
+          "from": "上个玥",
+          "to": "上个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.00354,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 10.0786,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0041",
+      "source": "generated_negative",
+      "query": "帮我查看上寄度番禺区招生报名进度的数据明细",
+      "normalized_query": "帮我查看上寄度番禺区招生报名进度的数据明细",
+      "expected_corrected_query": "帮我查看上季度番禺区招生报名进度的数据明细",
+      "predicted_corrected_query": "帮我查看上季度番禺区招生报名进度的数据明细",
+      "corrections": [
+        {
+          "from": "上寄度",
+          "to": "上季度",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003579,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "上季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 8.2389,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0042",
+      "source": "generated_from_excel",
+      "query": "核对昨添空港实验中学食堂晨检记录数记录是否合规，缺失项有哪些",
+      "normalized_query": "核对昨添空港实验中学食堂晨检记录数记录是否合规，缺失项有哪些",
+      "expected_corrected_query": "核对昨天空港实验中学食堂晨检记录数记录是否合规，缺失项有哪些",
+      "predicted_corrected_query": "核对昨天空港实验中学食堂晨检记录数记录是否合规，缺失项有哪些",
+      "corrections": [
+        {
+          "from": "昨添",
+          "to": "昨天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996101,
+      "expected_time": {
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "predicted_time": {
+        "raw": "昨天",
+        "granularity": "day",
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "latency_ms": 8.217,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0043",
+      "source": "generated_negative",
+      "query": "请统计上衣个月空港实验中学运动会报名名单情况，并给出排名",
+      "normalized_query": "请统计上衣个月空港实验中学运动会报名名单情况，并给出排名",
+      "expected_corrected_query": "请统计上一个月空港实验中学运动会报名名单情况，并给出排名",
+      "predicted_corrected_query": "请统计上一个月空港实验中学运动会报名名单情况，并给出排名",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.00507,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 10.1191,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0044",
+      "source": "generated_negative",
+      "query": "请统计最近一个月市桥实验学校办公用品领用情况，并给出排明",
+      "normalized_query": "请统计最近一个月市桥实验学校办公用品领用情况，并给出排明",
+      "expected_corrected_query": "请统计最近一个月市桥实验学校办公用品领用情况，并给出排名",
+      "predicted_corrected_query": "请统计最近一个月市桥实验学校办公用品领用情况，并给出排名",
+      "corrections": [
+        {
+          "from": "排明",
+          "to": "排名",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.004481,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 10.2919,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0045",
+      "source": "generated_negative",
+      "query": "我想了解上衣个月空港实验中学招生报名进度的变化趋势",
+      "normalized_query": "我想了解上衣个月空港实验中学招生报名进度的变化趋势",
+      "expected_corrected_query": "我想了解上一个月空港实验中学招生报名进度的变化趋势",
+      "predicted_corrected_query": "我想了解上一个月空港实验中学招生报名进度的变化趋势",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.012788,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.8035,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0046",
+      "source": "generated_from_excel",
+      "query": "筛查最近一个月全市食唐业务里学校食堂陪餐记录异常的学校名单",
+      "normalized_query": "筛查最近一个月全市食唐业务里学校食堂陪餐记录异常的学校名单",
+      "expected_corrected_query": "筛查最近一个月全市食堂业务里学校食堂陪餐记录异常的学校名单",
+      "predicted_corrected_query": "筛查最近一个月全市食堂业务里学校食堂陪餐记录异常的学校名单",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996491,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 8.0702,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0047",
+      "source": "existing_json",
+      "query": "我想了解上衣个月广州市白云区颜乐天纪念中学变质食品销毁台账中，销毁原因是否填写完整？处理办法是否符合规定？",
+      "normalized_query": "我想了解上衣个月广州市白云区颜乐天纪念中学变质食品销毁台账中，销毁原因是否填写完整?处理办法是否符合规定?",
+      "expected_corrected_query": "我想了解上一个月广州市白云区颜乐天纪念中学变质食品销毁台账中，销毁原因是否填写完整？处理办法是否符合规定？",
+      "predicted_corrected_query": "我想了解上一个月广州市白云区颜乐天纪念中学变质食品销毁台账中，销毁原因是否填写完整?处理办法是否符合规定?",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996416,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 10.5289,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0048",
+      "source": "generated_negative",
+      "query": "导出上寄度天河区运动会报名名单清单，按数量排序",
+      "normalized_query": "导出上寄度天河区运动会报名名单清单，按数量排序",
+      "expected_corrected_query": "导出上季度天河区运动会报名名单清单，按数量排序",
+      "predicted_corrected_query": "导出上季度天河区运动会报名名单清单，按数量排序",
+      "corrections": [
+        {
+          "from": "上寄度",
+          "to": "上季度",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.00324,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "上季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 10.1751,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0049",
+      "source": "generated_from_excel",
+      "query": "帮我查看2026年1月番禺区学校食堂教师储值消费台帐完整率和问题明细",
+      "normalized_query": "帮我查看2026年1月番禺区学校食堂教师储值消费台帐完整率和问题明细",
+      "expected_corrected_query": "帮我查看2026年1月番禺区学校食堂教师储值消费台账完整率和问题明细",
+      "predicted_corrected_query": "帮我查看2026年1月番禺区学校食堂教师储值消费台账完整率和问题明细",
+      "corrections": [
+        {
+          "from": "台帐",
+          "to": "台账",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.99631,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 7.5895,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0050",
+      "source": "generated_from_excel",
+      "query": "我想知道笨季度云山中学食堂手检异常人数的总量、占比和变化原因",
+      "normalized_query": "我想知道笨季度云山中学食堂手检异常人数的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道本季度云山中学食堂手检异常人数的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道本季度云山中学食堂手检异常人数的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "笨季度",
+          "to": "本季度",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996603,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "predicted_time": {
+        "raw": "本季度",
+        "granularity": "quarter",
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "latency_ms": 6.5203,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0051",
+      "source": "generated_from_excel",
+      "query": "分析最近一个月全市校园餐各餐段陪餐记绿数占比趋势，并和上一周期做对比",
+      "normalized_query": "分析最近一个月全市校园餐各餐段陪餐记绿数占比趋势，并和上一周期做对比",
+      "expected_corrected_query": "分析最近一个月全市校园餐各餐段陪餐记录数占比趋势，并和上一周期做对比",
+      "predicted_corrected_query": "分析最近一个月全市校园餐各餐段陪餐记录数占比趋势，并和上一周期做对比",
+      "corrections": [
+        {
+          "from": "记绿",
+          "to": "记录",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996269,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 15.5924,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0052",
+      "source": "generated_from_excel",
+      "query": "请统计上季度明德小学食唐的陪餐人员数情况，并说明是否存在异常",
+      "normalized_query": "请统计上季度明德小学食唐的陪餐人员数情况，并说明是否存在异常",
+      "expected_corrected_query": "请统计上季度明德小学食堂的陪餐人员数情况，并说明是否存在异常",
+      "predicted_corrected_query": "请统计上季度明德小学食堂的陪餐人员数情况，并说明是否存在异常",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996425,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "上季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 9.8949,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0053",
+      "source": "generated_from_excel",
+      "query": "我想知道上周白云区第一小学食唐补贴消费的总量、占比和变化原因",
+      "normalized_query": "我想知道上周白云区第一小学食唐补贴消费的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道上周白云区第一小学食堂补贴消费的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道上周白云区第一小学食堂补贴消费的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996452,
+      "expected_time": {
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "predicted_time": {
+        "raw": "上周",
+        "granularity": "week",
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "latency_ms": 7.7924,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0054",
+      "source": "generated_negative",
+      "query": "导出上个玥黄埔区办公用品领用清单，按数量排序",
+      "normalized_query": "导出上个玥黄埔区办公用品领用清单，按数量排序",
+      "expected_corrected_query": "导出上个月黄埔区办公用品领用清单，按数量排序",
+      "predicted_corrected_query": "导出上个月黄埔区办公用品领用清单，按数量排序",
+      "corrections": [
+        {
+          "from": "上个玥",
+          "to": "上个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003375,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.1421,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0055",
+      "source": "generated_from_excel",
+      "query": "筛查今年白云区食唐业务里补贴消费异常的学校名单",
+      "normalized_query": "筛查今年白云区食唐业务里补贴消费异常的学校名单",
+      "expected_corrected_query": "筛查今年白云区食堂业务里补贴消费异常的学校名单",
+      "predicted_corrected_query": "筛查今年白云区食堂业务里补贴消费异常的学校名单",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996236,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "predicted_time": {
+        "raw": "今年",
+        "granularity": "year",
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "latency_ms": 9.9726,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0056",
+      "source": "generated_negative",
+      "query": "上周广州市广园中学图书采够预算有没有异常，原因是什么",
+      "normalized_query": "上周广州市广园中学图书采够预算有没有异常，原因是什么",
+      "expected_corrected_query": "上周广州市广园中学图书采购预算有没有异常，原因是什么",
+      "predicted_corrected_query": "上周广州市广园中学图书采购预算有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "采够",
+          "to": "采购",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.00352,
+      "expected_time": {
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "predicted_time": {
+        "raw": "上周",
+        "granularity": "week",
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "latency_ms": 14.6172,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0057",
+      "source": "generated_from_excel",
+      "query": "分析2026年1月荔湾区校园餐水电气成夲趋势，并和上一周期做对比",
+      "normalized_query": "分析2026年1月荔湾区校园餐水电气成夲趋势，并和上一周期做对比",
+      "expected_corrected_query": "分析2026年1月荔湾区校园餐水电气成本趋势，并和上一周期做对比",
+      "predicted_corrected_query": "分析2026年1月荔湾区校园餐水电气成本趋势，并和上一周期做对比",
+      "corrections": [
+        {
+          "from": "成夲",
+          "to": "成本",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.99621,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 7.458,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0058",
+      "source": "generated_negative",
+      "query": "导出最进一周黄埔区校园网故障清单，按数量排序",
+      "normalized_query": "导出最进一周黄埔区校园网故障清单，按数量排序",
+      "expected_corrected_query": "导出最近一周黄埔区校园网故障清单，按数量排序",
+      "predicted_corrected_query": "导出最近一周黄埔区校园网故障清单，按数量排序",
+      "corrections": [
+        {
+          "from": "最进一周",
+          "to": "最近一周",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003462,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 17.2525,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0059",
+      "source": "existing_json",
+      "query": "我想了解上一个月广州白云区全区刀具管理不合格学效有哪些，不合格项是什么？",
+      "normalized_query": "我想了解上一个月广州白云区全区刀具管理不合格学效有哪些，不合格项是什么?",
+      "expected_corrected_query": "我想了解上一个月广州白云区全区刀具管理不合格学校有哪些，不合格项是什么？",
+      "predicted_corrected_query": "我想了解上一个月广州白云区全区刀具管理不合格学校有哪些，不合格项是什么?",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.991605,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.9226,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0060",
+      "source": "generated_negative",
+      "query": "我想了解上季度花城实验学效办公用品领用的变化趋势",
+      "normalized_query": "我想了解上季度花城实验学效办公用品领用的变化趋势",
+      "expected_corrected_query": "我想了解上季度花城实验学校办公用品领用的变化趋势",
+      "predicted_corrected_query": "我想了解上季度花城实验学校办公用品领用的变化趋势",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003779,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "上季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 20.3963,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0061",
+      "source": "generated_from_excel",
+      "query": "核对今天花城实验学校食堂台账监管记绿是否合规，缺失项有哪些",
+      "normalized_query": "核对今天花城实验学校食堂台账监管记绿是否合规，缺失项有哪些",
+      "expected_corrected_query": "核对今天花城实验学校食堂台账监管记录是否合规，缺失项有哪些",
+      "predicted_corrected_query": "核对今天花城实验学校食堂台账监管记录是否合规，缺失项有哪些",
+      "corrections": [
+        {
+          "from": "记绿",
+          "to": "记录",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995044,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.4334,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0062",
+      "source": "existing_json",
+      "query": "我想了解上一个月白云区学效食堂从业人员持健康证上岗率是否达到100%？",
+      "normalized_query": "我想了解上一个月白云区学效食堂从业人员持健康证上岗率是否达到100%?",
+      "expected_corrected_query": "我想了解上一个月白云区学校食堂从业人员持健康证上岗率是否达到100%？",
+      "predicted_corrected_query": "我想了解上一个月白云区学校食堂从业人员持健康证上岗率是否达到100%?",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996712,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.2516,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0063",
+      "source": "generated_from_excel",
+      "query": "筛查去粘全市食堂业务里膳食费总收入异常的学校名单",
+      "normalized_query": "筛查去粘全市食堂业务里膳食费总收入异常的学校名单",
+      "expected_corrected_query": "筛查去年全市食堂业务里膳食费总收入异常的学校名单",
+      "predicted_corrected_query": "筛查去年全市食堂业务里膳食费总收入异常的学校名单",
+      "corrections": [
+        {
+          "from": "去粘",
+          "to": "去年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996604,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 8.897,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0064",
+      "source": "existing_json",
+      "query": "我想了解上衣个月广州市白云区总共分有哪几个片区",
+      "normalized_query": "我想了解上衣个月广州市白云区总共分有哪几个片区",
+      "expected_corrected_query": "我想了解上一个月广州市白云区总共分有哪几个片区",
+      "predicted_corrected_query": "我想了解上一个月广州市白云区总共分有哪几个片区",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.987393,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 6.8994,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0065",
+      "source": "generated_negative",
+      "query": "请统记昨天明德小学校园网故障情况，并给出排名",
+      "normalized_query": "请统记昨天明德小学校园网故障情况，并给出排名",
+      "expected_corrected_query": "请统计昨天明德小学校园网故障情况，并给出排名",
+      "predicted_corrected_query": "请统计昨天明德小学校园网故障情况，并给出排名",
+      "corrections": [
+        {
+          "from": "统记",
+          "to": "统计",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003918,
+      "expected_time": {
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "predicted_time": {
+        "raw": "昨天",
+        "granularity": "day",
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "latency_ms": 7.0987,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0066",
+      "source": "existing_json",
+      "query": "请查询上一个月帮我查一下各个学效健康证30天临期的人员有多少？",
+      "normalized_query": "请查询上一个月帮我查一下各个学效健康证30天临期的人员有多少?",
+      "expected_corrected_query": "请查询上一个月帮我查一下各个学校健康证30天临期的人员有多少？",
+      "predicted_corrected_query": "请查询上一个月帮我查一下各个学校健康证30天临期的人员有多少?",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995977,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.8291,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0067",
+      "source": "existing_json",
+      "query": "统记广州市珠江高级中学2026年第一季度食品安全总监、食品安全员的累计培训时长，是否均达到每年不少于40小时的要求？未达标人员的具体培训时长是多少？",
+      "normalized_query": "统记广州市珠江高级中学2026年第一季度食品安全总监、食品安全员的累计培训时长，是否均达到每年不少于40小时的要求?未达标人员的具体培训时长是多少?",
+      "expected_corrected_query": "统计广州市珠江高级中学2026年第一季度食品安全总监、食品安全员的累计培训时长，是否均达到每年不少于40小时的要求？未达标人员的具体培训时长是多少？",
+      "predicted_corrected_query": "统计广州市珠江高级中学2026年第一季度食品安全总监、食品安全员的累计培训时长，是否均达到每年不少于40小时的要求?未达标人员的具体培训时长是多少?",
+      "corrections": [
+        {
+          "from": "统记",
+          "to": "统计",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996146,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "2026年第一季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 9.0905,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0068",
+      "source": "generated_from_excel",
+      "query": "我想知道上个月培英学效食堂健康证过期人数的总量、占比和变化原因",
+      "normalized_query": "我想知道上个月培英学效食堂健康证过期人数的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道上个月培英学校食堂健康证过期人数的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道上个月培英学校食堂健康证过期人数的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.99662,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.7755,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0069",
+      "source": "generated_negative",
+      "query": "晴况导出2026年1月黄埔区运动会报名名单清单，按数量排序",
+      "normalized_query": "晴况导出2026年1月黄埔区运动会报名名单清单，按数量排序",
+      "expected_corrected_query": "情况导出2026年1月黄埔区运动会报名名单清单，按数量排序",
+      "predicted_corrected_query": "情况导出2026年1月黄埔区运动会报名名单清单，按数量排序",
+      "corrections": [
+        {
+          "from": "晴况",
+          "to": "情况",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003486,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 9.4066,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0070",
+      "source": "generated_negative",
+      "query": "核对最进一周全市办公用品领用记录是否完整",
+      "normalized_query": "核对最进一周全市办公用品领用记录是否完整",
+      "expected_corrected_query": "核对最近一周全市办公用品领用记录是否完整",
+      "predicted_corrected_query": "核对最近一周全市办公用品领用记录是否完整",
+      "corrections": [
+        {
+          "from": "最进一周",
+          "to": "最近一周",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003612,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 8.5665,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0071",
+      "source": "generated_from_excel",
+      "query": "导出上个月越秀区各学效食堂晨检记录完整率排名，标出异常学校",
+      "normalized_query": "导出上个月越秀区各学效食堂晨检记录完整率排名，标出异常学校",
+      "expected_corrected_query": "导出上个月越秀区各学校食堂晨检记录完整率排名，标出异常学校",
+      "predicted_corrected_query": "导出上个月越秀区各学校食堂晨检记录完整率排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995956,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.4223,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0072",
+      "source": "existing_json",
+      "query": "我想了解上一个月我要查看一下你们厂里的食堂年收如是多少？",
+      "normalized_query": "我想了解上一个月我要查看一下你们厂里的食堂年收如是多少?",
+      "expected_corrected_query": "我想了解上一个月我要查看一下你们厂里的食堂年收入是多少？",
+      "predicted_corrected_query": "我想了解上一个月我要查看一下你们厂里的食堂年收入是多少?",
+      "corrections": [
+        {
+          "from": "收如",
+          "to": "收入",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996429,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.7428,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0073",
+      "source": "existing_json",
+      "query": "空港实验中学2025年12月的出入库数量晴况",
+      "normalized_query": "空港实验中学2025年12月的出入库数量晴况",
+      "expected_corrected_query": "空港实验中学2025年12月的出入库数量情况",
+      "predicted_corrected_query": "空港实验中学2025年12月的出入库数量情况",
+      "corrections": [
+        {
+          "from": "晴况",
+          "to": "情况",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.988471,
+      "expected_time": {
+        "start": "2025-12-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "2025年12月",
+        "granularity": "month",
+        "start": "2025-12-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 6.8037,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0074",
+      "source": "generated_negative",
+      "query": "我想了解上衣个月明德小学教室投影仪维修的变化趋势",
+      "normalized_query": "我想了解上衣个月明德小学教室投影仪维修的变化趋势",
+      "expected_corrected_query": "我想了解上一个月明德小学教室投影仪维修的变化趋势",
+      "predicted_corrected_query": "我想了解上一个月明德小学教室投影仪维修的变化趋势",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.004188,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.1963,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0075",
+      "source": "generated_from_excel",
+      "query": "导出今天番禺区各学校食堂晨检记绿排名，标出异常学校",
+      "normalized_query": "导出今天番禺区各学校食堂晨检记绿排名，标出异常学校",
+      "expected_corrected_query": "导出今天番禺区各学校食堂晨检记录排名，标出异常学校",
+      "predicted_corrected_query": "导出今天番禺区各学校食堂晨检记录排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "记绿",
+          "to": "记录",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.993579,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 8.5551,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0076",
+      "source": "generated_negative",
+      "query": "帮我查看上周全市教师考勤统记的数据明细",
+      "normalized_query": "帮我查看上周全市教师考勤统记的数据明细",
+      "expected_corrected_query": "帮我查看上周全市教师考勤统计的数据明细",
+      "predicted_corrected_query": "帮我查看上周全市教师考勤统计的数据明细",
+      "corrections": [
+        {
+          "from": "统记",
+          "to": "统计",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003487,
+      "expected_time": {
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "predicted_time": {
+        "raw": "上周",
+        "granularity": "week",
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "latency_ms": 9.7939,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0077",
+      "source": "generated_from_excel",
+      "query": "筛查上衣个月天河区食堂业务里陪餐好评率异常的学校名单",
+      "normalized_query": "筛查上衣个月天河区食堂业务里陪餐好评率异常的学校名单",
+      "expected_corrected_query": "筛查上一个月天河区食堂业务里陪餐好评率异常的学校名单",
+      "predicted_corrected_query": "筛查上一个月天河区食堂业务里陪餐好评率异常的学校名单",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996505,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.6696,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0078",
+      "source": "existing_json",
+      "query": "麻烦统计上衣个月孩子说明天要吃鱼，我担心有刺，能不能查一下明天午餐的鱼是什么品种？刺多吗？",
+      "normalized_query": "麻烦统计上衣个月孩子说明天要吃鱼，我担心有刺，能不能查一下明天午餐的鱼是什么品种?刺多吗?",
+      "expected_corrected_query": "麻烦统计上一个月孩子说明天要吃鱼，我担心有刺，能不能查一下明天午餐的鱼是什么品种？刺多吗？",
+      "predicted_corrected_query": "麻烦统计上一个月孩子说明天要吃鱼，我担心有刺，能不能查一下明天午餐的鱼是什么品种?刺多吗?",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995784,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.6541,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0079",
+      "source": "generated_negative",
+      "query": "最进一周岭南附属中学家长会签到有没有异常，原因是什么",
+      "normalized_query": "最进一周岭南附属中学家长会签到有没有异常，原因是什么",
+      "expected_corrected_query": "最近一周岭南附属中学家长会签到有没有异常，原因是什么",
+      "predicted_corrected_query": "最近一周岭南附属中学家长会签到有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "最进一周",
+          "to": "最近一周",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.004575,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.144,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0080",
+      "source": "generated_from_excel",
+      "query": "分析今粘越秀区校园餐留样照片上传率趋势，并和上一周期做对比",
+      "normalized_query": "分析今粘越秀区校园餐留样照片上传率趋势，并和上一周期做对比",
+      "expected_corrected_query": "分析今年越秀区校园餐留样照片上传率趋势，并和上一周期做对比",
+      "predicted_corrected_query": "分析今年越秀区校园餐留样照片上传率趋势，并和上一周期做对比",
+      "corrections": [
+        {
+          "from": "今粘",
+          "to": "今年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996173,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "predicted_time": {
+        "raw": "今年",
+        "granularity": "year",
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "latency_ms": 9.527,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0081",
+      "source": "generated_negative",
+      "query": "请统计最进一周广州市广园中学校车路线优化情况，并给出排名",
+      "normalized_query": "请统计最进一周广州市广园中学校车路线优化情况，并给出排名",
+      "expected_corrected_query": "请统计最近一周广州市广园中学校车路线优化情况，并给出排名",
+      "predicted_corrected_query": "请统计最近一周广州市广园中学校车路线优化情况，并给出排名",
+      "corrections": [
+        {
+          "from": "最进一周",
+          "to": "最近一周",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003627,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 11.0028,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0082",
+      "source": "existing_json",
+      "query": "帮我看一下上一个月我们学效食堂下个季度想换一批新的菜谱，需要教育局审批吗？",
+      "normalized_query": "帮我看一下上一个月我们学效食堂下个季度想换一批新的菜谱，需要教育局审批吗?",
+      "expected_corrected_query": "帮我看一下上一个月我们学校食堂下个季度想换一批新的菜谱，需要教育局审批吗？",
+      "predicted_corrected_query": "帮我看一下上一个月我们学校食堂下个季度想换一批新的菜谱，需要教育局审批吗?",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996351,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 10.8841,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0083",
+      "source": "generated_from_excel",
+      "query": "分析最进一个月番禺区校园餐教师补贴消费趋势，并和上一周期做对比",
+      "normalized_query": "分析最进一个月番禺区校园餐教师补贴消费趋势，并和上一周期做对比",
+      "expected_corrected_query": "分析最近一个月番禺区校园餐教师补贴消费趋势，并和上一周期做对比",
+      "predicted_corrected_query": "分析最近一个月番禺区校园餐教师补贴消费趋势，并和上一周期做对比",
+      "corrections": [
+        {
+          "from": "最进一个月",
+          "to": "最近一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996235,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.5618,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0084",
+      "source": "existing_json",
+      "query": "2026年1月白云区学校食堂财务收支数居报告",
+      "normalized_query": "2026年1月白云区学校食堂财务收支数居报告",
+      "expected_corrected_query": "2026年1月白云区学校食堂财务收支数据报告",
+      "predicted_corrected_query": "2026年1月白云区学校食堂财务收支数据报告",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996095,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 8.7726,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0085",
+      "source": "generated_from_excel",
+      "query": "核对最近一周花城实验学效食堂台账监管记录是否合规，缺失项有哪些",
+      "normalized_query": "核对最近一周花城实验学效食堂台账监管记录是否合规，缺失项有哪些",
+      "expected_corrected_query": "核对最近一周花城实验学校食堂台账监管记录是否合规，缺失项有哪些",
+      "predicted_corrected_query": "核对最近一周花城实验学校食堂台账监管记录是否合规，缺失项有哪些",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995708,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.5177,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0086",
+      "source": "generated_from_excel",
+      "query": "帮我查看去粘荔湾区学校食堂膳食费总支出台账完整率和问题明细",
+      "normalized_query": "帮我查看去粘荔湾区学校食堂膳食费总支出台账完整率和问题明细",
+      "expected_corrected_query": "帮我查看去年荔湾区学校食堂膳食费总支出台账完整率和问题明细",
+      "predicted_corrected_query": "帮我查看去年荔湾区学校食堂膳食费总支出台账完整率和问题明细",
+      "corrections": [
+        {
+          "from": "去粘",
+          "to": "去年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995953,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 8.3537,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0087",
+      "source": "generated_negative",
+      "query": "请统计最进一周云山中学校服尺码统计情况，并给出排名",
+      "normalized_query": "请统计最进一周云山中学校服尺码统计情况，并给出排名",
+      "expected_corrected_query": "请统计最近一周云山中学校服尺码统计情况，并给出排名",
+      "predicted_corrected_query": "请统计最近一周云山中学校服尺码统计情况，并给出排名",
+      "corrections": [
+        {
+          "from": "最进一周",
+          "to": "最近一周",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003502,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 6.9465,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0088",
+      "source": "existing_json",
+      "query": "我想了解上一个月采够频率（次）小于30的学校可能存在哪些问题",
+      "normalized_query": "我想了解上一个月采够频率（次）小于30的学校可能存在哪些问题",
+      "expected_corrected_query": "我想了解上一个月采购频率（次）小于30的学校可能存在哪些问题",
+      "predicted_corrected_query": "我想了解上一个月采购频率（次）小于30的学校可能存在哪些问题",
+      "corrections": [
+        {
+          "from": "采够",
+          "to": "采购",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.99538,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.664,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0089",
+      "source": "generated_negative",
+      "query": "帮我查看最近一周全市校园绿化养护的数居明细",
+      "normalized_query": "帮我查看最近一周全市校园绿化养护的数居明细",
+      "expected_corrected_query": "帮我查看最近一周全市校园绿化养护的数据明细",
+      "predicted_corrected_query": "帮我查看最近一周全市校园绿化养护的数据明细",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003798,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.7409,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0090",
+      "source": "generated_from_excel",
+      "query": "筛查2026年1月荔湾区食唐业务里环境卫生异常的学校名单",
+      "normalized_query": "筛查2026年1月荔湾区食唐业务里环境卫生异常的学校名单",
+      "expected_corrected_query": "筛查2026年1月荔湾区食堂业务里环境卫生异常的学校名单",
+      "predicted_corrected_query": "筛查2026年1月荔湾区食堂业务里环境卫生异常的学校名单",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996387,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 9.7691,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0091",
+      "source": "generated_from_excel",
+      "query": "帮我查看最近一周黄埔区学校食堂总收入占比台帐完整率和问题明细",
+      "normalized_query": "帮我查看最近一周黄埔区学校食堂总收入占比台帐完整率和问题明细",
+      "expected_corrected_query": "帮我查看最近一周黄埔区学校食堂总收入占比台账完整率和问题明细",
+      "predicted_corrected_query": "帮我查看最近一周黄埔区学校食堂总收入占比台账完整率和问题明细",
+      "corrections": [
+        {
+          "from": "台帐",
+          "to": "台账",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.99636,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 10.2478,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0092",
+      "source": "existing_json",
+      "query": "我想了解上衣个月这个学期食堂的菜品进行了调整，我想看看调整后的营养搭配是否符合学生生长发育需求",
+      "normalized_query": "我想了解上衣个月这个学期食堂的菜品进行了调整，我想看看调整后的营养搭配是否符合学生生长发育需求",
+      "expected_corrected_query": "我想了解上一个月这个学期食堂的菜品进行了调整，我想看看调整后的营养搭配是否符合学生生长发育需求",
+      "predicted_corrected_query": "我想了解上一个月这个学期食堂的菜品进行了调整，我想看看调整后的营养搭配是否符合学生生长发育需求",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996421,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.8725,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0093",
+      "source": "generated_from_excel",
+      "query": "我想知道去粘市桥实验学校食堂利润总金额的总量、占比和变化原因",
+      "normalized_query": "我想知道去粘市桥实验学校食堂利润总金额的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道去年市桥实验学校食堂利润总金额的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道去年市桥实验学校食堂利润总金额的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "去粘",
+          "to": "去年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996558,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 11.9121,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0094",
+      "source": "generated_from_excel",
+      "query": "筛查上周天河区食堂业务里非营业成夲-其他成本金额异常的学校名单",
+      "normalized_query": "筛查上周天河区食堂业务里非营业成夲-其他成本金额异常的学校名单",
+      "expected_corrected_query": "筛查上周天河区食堂业务里非营业成本-其他成本金额异常的学校名单",
+      "predicted_corrected_query": "筛查上周天河区食堂业务里非营业成本-其他成本金额异常的学校名单",
+      "corrections": [
+        {
+          "from": "成夲",
+          "to": "成本",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996509,
+      "expected_time": {
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "predicted_time": {
+        "raw": "上周",
+        "granularity": "week",
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "latency_ms": 9.9342,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0095",
+      "source": "generated_negative",
+      "query": "帮我查看最近一周白云区图书馆借阅排行的数居明细",
+      "normalized_query": "帮我查看最近一周白云区图书馆借阅排行的数居明细",
+      "expected_corrected_query": "帮我查看最近一周白云区图书馆借阅排行的数据明细",
+      "predicted_corrected_query": "帮我查看最近一周白云区图书馆借阅排行的数据明细",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003425,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.1449,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0096",
+      "source": "existing_json",
+      "query": "请查询上一个月对比全区50家食材配送企业，哪些企业的供货准时率最低、头诉率最高？请给出整改建议",
+      "normalized_query": "请查询上一个月对比全区50家食材配送企业，哪些企业的供货准时率最低、头诉率最高?请给出整改建议",
+      "expected_corrected_query": "请查询上一个月对比全区50家食材配送企业，哪些企业的供货准时率最低、投诉率最高？请给出整改建议",
+      "predicted_corrected_query": "请查询上一个月对比全区50家食材配送企业，哪些企业的供货准时率最低、投诉率最高?请给出整改建议",
+      "corrections": [
+        {
+          "from": "头诉",
+          "to": "投诉",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996164,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.8015,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0097",
+      "source": "generated_negative",
+      "query": "今添明德小学心理咨询预约有没有异常，原因是什么",
+      "normalized_query": "今添明德小学心理咨询预约有没有异常，原因是什么",
+      "expected_corrected_query": "今天明德小学心理咨询预约有没有异常，原因是什么",
+      "predicted_corrected_query": "今天明德小学心理咨询预约有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "今添",
+          "to": "今天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.004117,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 8.0205,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0098",
+      "source": "generated_negative",
+      "query": "帮我查看上个玥番禺区校园绿化养护的数据明细",
+      "normalized_query": "帮我查看上个玥番禺区校园绿化养护的数据明细",
+      "expected_corrected_query": "帮我查看上个月番禺区校园绿化养护的数据明细",
+      "predicted_corrected_query": "帮我查看上个月番禺区校园绿化养护的数据明细",
+      "corrections": [
+        {
+          "from": "上个玥",
+          "to": "上个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003906,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.6449,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0099",
+      "source": "existing_json",
+      "query": "麻烦统计上衣个月我要给全校老师订明天中午的盒饭，大概200份，每份标准30元，能在系统上下单吗？",
+      "normalized_query": "麻烦统计上衣个月我要给全校老师订明天中午的盒饭，大概200份，每份标准30元，能在系统上下单吗?",
+      "expected_corrected_query": "麻烦统计上一个月我要给全校老师订明天中午的盒饭，大概200份，每份标准30元，能在系统上下单吗？",
+      "predicted_corrected_query": "麻烦统计上一个月我要给全校老师订明天中午的盒饭，大概200份，每份标准30元，能在系统上下单吗?",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995685,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.9425,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0100",
+      "source": "generated_from_excel",
+      "query": "筛查2026年1月黄埔区食堂业务里晨检记录完整率异常的学效名单",
+      "normalized_query": "筛查2026年1月黄埔区食堂业务里晨检记录完整率异常的学效名单",
+      "expected_corrected_query": "筛查2026年1月黄埔区食堂业务里晨检记录完整率异常的学校名单",
+      "predicted_corrected_query": "筛查2026年1月黄埔区食堂业务里晨检记录完整率异常的学校名单",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996525,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 9.3785,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0101",
+      "source": "existing_json",
+      "query": "今添食堂放的音乐太难听了，能不能换一首？",
+      "normalized_query": "今添食堂放的音乐太难听了，能不能换一首?",
+      "expected_corrected_query": "今天食堂放的音乐太难听了，能不能换一首？",
+      "predicted_corrected_query": "今天食堂放的音乐太难听了，能不能换一首?",
+      "corrections": [
+        {
+          "from": "今添",
+          "to": "今天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.992842,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 6.1818,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0102",
+      "source": "existing_json",
+      "query": "请查洵上一个月明天天气怎么样",
+      "normalized_query": "请查洵上一个月明天天气怎么样",
+      "expected_corrected_query": "请查询上一个月明天天气怎么样",
+      "predicted_corrected_query": "请查询上一个月明天天气怎么样",
+      "corrections": [
+        {
+          "from": "查洵",
+          "to": "查询",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.991548,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.8988,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0103",
+      "source": "generated_negative",
+      "query": "导出上衣个月番禺区校园网故障清单，按数量排序",
+      "normalized_query": "导出上衣个月番禺区校园网故障清单，按数量排序",
+      "expected_corrected_query": "导出上一个月番禺区校园网故障清单，按数量排序",
+      "predicted_corrected_query": "导出上一个月番禺区校园网故障清单，按数量排序",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003572,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.1621,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0104",
+      "source": "existing_json",
+      "query": "分析广州市第七十中学2026年第一季度就餐人数数居，是否存在连续3天以上人数为0的记录？若有，请核实是否因停餐或系统故障导致？",
+      "normalized_query": "分析广州市第七十中学2026年第一季度就餐人数数居，是否存在连续3天以上人数为0的记录?若有，请核实是否因停餐或系统故障导致?",
+      "expected_corrected_query": "分析广州市第七十中学2026年第一季度就餐人数数据，是否存在连续3天以上人数为0的记录？若有，请核实是否因停餐或系统故障导致？",
+      "predicted_corrected_query": "分析广州市第七十中学2026年第一季度就餐人数数据，是否存在连续3天以上人数为0的记录?若有，请核实是否因停餐或系统故障导致?",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996087,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "2026年第一季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 10.4361,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0105",
+      "source": "generated_negative",
+      "query": "核对最进一个月天河区停车场车位分配记录是否完整",
+      "normalized_query": "核对最进一个月天河区停车场车位分配记录是否完整",
+      "expected_corrected_query": "核对最近一个月天河区停车场车位分配记录是否完整",
+      "predicted_corrected_query": "核对最近一个月天河区停车场车位分配记录是否完整",
+      "corrections": [
+        {
+          "from": "最进一个月",
+          "to": "最近一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003762,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 10.8756,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0106",
+      "source": "generated_from_excel",
+      "query": "分析2026年1月全市校园餐利闰率趋势，并和上一周期做对比",
+      "normalized_query": "分析2026年1月全市校园餐利闰率趋势，并和上一周期做对比",
+      "expected_corrected_query": "分析2026年1月全市校园餐利润率趋势，并和上一周期做对比",
+      "predicted_corrected_query": "分析2026年1月全市校园餐利润率趋势，并和上一周期做对比",
+      "corrections": [
+        {
+          "from": "利闰",
+          "to": "利润",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996389,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 8.2732,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0107",
+      "source": "generated_negative",
+      "query": "核对去粘天河区图书馆借阅排行记录是否完整",
+      "normalized_query": "核对去粘天河区图书馆借阅排行记录是否完整",
+      "expected_corrected_query": "核对去年天河区图书馆借阅排行记录是否完整",
+      "predicted_corrected_query": "核对去年天河区图书馆借阅排行记录是否完整",
+      "corrections": [
+        {
+          "from": "去粘",
+          "to": "去年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003405,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 10.0741,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0108",
+      "source": "generated_from_excel",
+      "query": "晴况分析上周越秀区校园餐教师补贴消费趋势，并和上一周期做对比",
+      "normalized_query": "晴况分析上周越秀区校园餐教师补贴消费趋势，并和上一周期做对比",
+      "expected_corrected_query": "情况分析上周越秀区校园餐教师补贴消费趋势，并和上一周期做对比",
+      "predicted_corrected_query": "情况分析上周越秀区校园餐教师补贴消费趋势，并和上一周期做对比",
+      "corrections": [
+        {
+          "from": "晴况",
+          "to": "情况",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996142,
+      "expected_time": {
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "predicted_time": {
+        "raw": "上周",
+        "granularity": "week",
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "latency_ms": 9.7906,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0109",
+      "source": "generated_negative",
+      "query": "帮我查看上周天河区期末考试安排的数居明细",
+      "normalized_query": "帮我查看上周天河区期末考试安排的数居明细",
+      "expected_corrected_query": "帮我查看上周天河区期末考试安排的数据明细",
+      "predicted_corrected_query": "帮我查看上周天河区期末考试安排的数据明细",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003316,
+      "expected_time": {
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "predicted_time": {
+        "raw": "上周",
+        "granularity": "week",
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "latency_ms": 8.3455,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0110",
+      "source": "existing_json",
+      "query": "平沙培英学校2026年1月的陪餐晴况",
+      "normalized_query": "平沙培英学校2026年1月的陪餐晴况",
+      "expected_corrected_query": "平沙培英学校2026年1月的陪餐情况",
+      "predicted_corrected_query": "平沙培英学校2026年1月的陪餐情况",
+      "corrections": [
+        {
+          "from": "晴况",
+          "to": "情况",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995536,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 8.5809,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0111",
+      "source": "generated_from_excel",
+      "query": "分析上一个月番禺区校园餐人工成夲趋势，并和上一周期做对比",
+      "normalized_query": "分析上一个月番禺区校园餐人工成夲趋势，并和上一周期做对比",
+      "expected_corrected_query": "分析上一个月番禺区校园餐人工成本趋势，并和上一周期做对比",
+      "predicted_corrected_query": "分析上一个月番禺区校园餐人工成本趋势，并和上一周期做对比",
+      "corrections": [
+        {
+          "from": "成夲",
+          "to": "成本",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996434,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 10.3528,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0112",
+      "source": "generated_negative",
+      "query": "去粘机场路小学门禁刷卡记录有没有异常，原因是什么",
+      "normalized_query": "去粘机场路小学门禁刷卡记录有没有异常，原因是什么",
+      "expected_corrected_query": "去年机场路小学门禁刷卡记录有没有异常，原因是什么",
+      "predicted_corrected_query": "去年机场路小学门禁刷卡记录有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "去粘",
+          "to": "去年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.005199,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 6.5562,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0113",
+      "source": "existing_json",
+      "query": "麻烦统计上一个月分析一下最近三个月肉类食才的统购报价趋势，对比最高价和最低价，找出异常波动的供应商",
+      "normalized_query": "麻烦统计上一个月分析一下最近三个月肉类食才的统购报价趋势，对比最高价和最低价，找出异常波动的供应商",
+      "expected_corrected_query": "麻烦统计上一个月分析一下最近三个月肉类食材的统购报价趋势，对比最高价和最低价，找出异常波动的供应商",
+      "predicted_corrected_query": "麻烦统计上一个月分析一下最近三个月肉类食材的统购报价趋势，对比最高价和最低价，找出异常波动的供应商",
+      "corrections": [
+        {
+          "from": "食才",
+          "to": "食材",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996238,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.255,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0114",
+      "source": "existing_json",
+      "query": "整个区上个玥的食品安全报告",
+      "normalized_query": "整个区上个玥的食品安全报告",
+      "expected_corrected_query": "整个区上个月的食品安全报告",
+      "predicted_corrected_query": "整个区上个月的食品安全报告",
+      "corrections": [
+        {
+          "from": "上个玥",
+          "to": "上个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995098,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.6256,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0115",
+      "source": "generated_negative",
+      "query": "我想了解上季度岭南附属中学效车路线优化的变化趋势",
+      "normalized_query": "我想了解上季度岭南附属中学效车路线优化的变化趋势",
+      "expected_corrected_query": "我想了解上季度岭南附属中学校车路线优化的变化趋势",
+      "predicted_corrected_query": "我想了解上季度岭南附属中学校车路线优化的变化趋势",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003221,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "上季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 10.7949,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0116",
+      "source": "existing_json",
+      "query": "我想了解上一个月我是新来的莹养师，我怎么在系统里录入我的资质证书？",
+      "normalized_query": "我想了解上一个月我是新来的莹养师，我怎么在系统里录入我的资质证书?",
+      "expected_corrected_query": "我想了解上一个月我是新来的营养师，我怎么在系统里录入我的资质证书？",
+      "predicted_corrected_query": "我想了解上一个月我是新来的营养师，我怎么在系统里录入我的资质证书?",
+      "corrections": [
+        {
+          "from": "莹养",
+          "to": "营养",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996202,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.4749,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0117",
+      "source": "generated_negative",
+      "query": "导出昨添番禺区办公用品领用清单，按数量排序",
+      "normalized_query": "导出昨添番禺区办公用品领用清单，按数量排序",
+      "expected_corrected_query": "导出昨天番禺区办公用品领用清单，按数量排序",
+      "predicted_corrected_query": "导出昨天番禺区办公用品领用清单，按数量排序",
+      "corrections": [
+        {
+          "from": "昨添",
+          "to": "昨天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003395,
+      "expected_time": {
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "predicted_time": {
+        "raw": "昨天",
+        "granularity": "day",
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "latency_ms": 8.8009,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0118",
+      "source": "existing_json",
+      "query": "请核查广州市白云区石马小学2026年第一季度台帐，是否存在周排查报告提交时间晚于规定时限（如次周一17:00前）的情况？迟交报告共有多少份？",
+      "normalized_query": "请核查广州市白云区石马小学2026年第一季度台帐，是否存在周排查报告提交时间晚于规定时限（如次周一17:00前）的情况?迟交报告共有多少份?",
+      "expected_corrected_query": "请核查广州市白云区石马小学2026年第一季度台账，是否存在周排查报告提交时间晚于规定时限（如次周一17:00前）的情况？迟交报告共有多少份？",
+      "predicted_corrected_query": "请核查广州市白云区石马小学2026年第一季度台账，是否存在周排查报告提交时间晚于规定时限（如次周一17:00前）的情况?迟交报告共有多少份?",
+      "corrections": [
+        {
+          "from": "台帐",
+          "to": "台账",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995145,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "2026年第一季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 9.3413,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0119",
+      "source": "generated_negative",
+      "query": "我想了解昨添市桥实验学校期末考试安排的变化趋势",
+      "normalized_query": "我想了解昨添市桥实验学校期末考试安排的变化趋势",
+      "expected_corrected_query": "我想了解昨天市桥实验学校期末考试安排的变化趋势",
+      "predicted_corrected_query": "我想了解昨天市桥实验学校期末考试安排的变化趋势",
+      "corrections": [
+        {
+          "from": "昨添",
+          "to": "昨天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003215,
+      "expected_time": {
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "predicted_time": {
+        "raw": "昨天",
+        "granularity": "day",
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "latency_ms": 10.6056,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0120",
+      "source": "generated_negative",
+      "query": "我想了解上衣个月云山中学学生请假审批的变化趋势",
+      "normalized_query": "我想了解上衣个月云山中学学生请假审批的变化趋势",
+      "expected_corrected_query": "我想了解上一个月云山中学学生请假审批的变化趋势",
+      "predicted_corrected_query": "我想了解上一个月云山中学学生请假审批的变化趋势",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.007465,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.9097,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0121",
+      "source": "generated_negative",
+      "query": "帮我查看去年天河区图书采购预算的数居明细",
+      "normalized_query": "帮我查看去年天河区图书采购预算的数居明细",
+      "expected_corrected_query": "帮我查看去年天河区图书采购预算的数据明细",
+      "predicted_corrected_query": "帮我查看去年天河区图书采购预算的数据明细",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003394,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 6.352,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0122",
+      "source": "generated_negative",
+      "query": "帮我查看本季度荔湾区教室投影仪维修的数居明细",
+      "normalized_query": "帮我查看本季度荔湾区教室投影仪维修的数居明细",
+      "expected_corrected_query": "帮我查看本季度荔湾区教室投影仪维修的数据明细",
+      "predicted_corrected_query": "帮我查看本季度荔湾区教室投影仪维修的数据明细",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003393,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "predicted_time": {
+        "raw": "本季度",
+        "granularity": "quarter",
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "latency_ms": 7.6814,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0123",
+      "source": "generated_negative",
+      "query": "导出上个玥全市心理咨询预约清单，按数量排序",
+      "normalized_query": "导出上个玥全市心理咨询预约清单，按数量排序",
+      "expected_corrected_query": "导出上个月全市心理咨询预约清单，按数量排序",
+      "predicted_corrected_query": "导出上个月全市心理咨询预约清单，按数量排序",
+      "corrections": [
+        {
+          "from": "上个玥",
+          "to": "上个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003287,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.4234,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0124",
+      "source": "generated_negative",
+      "query": "最近一个月培英学校门禁刷卡记绿有没有异常，原因是什么",
+      "normalized_query": "最近一个月培英学校门禁刷卡记绿有没有异常，原因是什么",
+      "expected_corrected_query": "最近一个月培英学校门禁刷卡记录有没有异常，原因是什么",
+      "predicted_corrected_query": "最近一个月培英学校门禁刷卡记录有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "记绿",
+          "to": "记录",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.009252,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.0168,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0125",
+      "source": "generated_from_excel",
+      "query": "昨天白云区第一小学的利闰数据有没有风险，给出原因和整改建议",
+      "normalized_query": "昨天白云区第一小学的利闰数据有没有风险，给出原因和整改建议",
+      "expected_corrected_query": "昨天白云区第一小学的利润数据有没有风险，给出原因和整改建议",
+      "predicted_corrected_query": "昨天白云区第一小学的利润数据有没有风险，给出原因和整改建议",
+      "corrections": [
+        {
+          "from": "利闰",
+          "to": "利润",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995572,
+      "expected_time": {
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "predicted_time": {
+        "raw": "昨天",
+        "granularity": "day",
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "latency_ms": 8.069,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0126",
+      "source": "generated_negative",
+      "query": "记绿2026年1月空港实验中学办公用品领用有没有异常，原因是什么",
+      "normalized_query": "记绿2026年1月空港实验中学办公用品领用有没有异常，原因是什么",
+      "expected_corrected_query": "记录2026年1月空港实验中学办公用品领用有没有异常，原因是什么",
+      "predicted_corrected_query": "记录2026年1月空港实验中学办公用品领用有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "记绿",
+          "to": "记录",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.006959,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 7.859,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0127",
+      "source": "generated_negative",
+      "query": "我想了解上寄度白云区第一小学图书馆借阅排行的变化趋势",
+      "normalized_query": "我想了解上寄度白云区第一小学图书馆借阅排行的变化趋势",
+      "expected_corrected_query": "我想了解上季度白云区第一小学图书馆借阅排行的变化趋势",
+      "predicted_corrected_query": "我想了解上季度白云区第一小学图书馆借阅排行的变化趋势",
+      "corrections": [
+        {
+          "from": "上寄度",
+          "to": "上季度",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003079,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "上季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 6.1239,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0128",
+      "source": "generated_from_excel",
+      "query": "我想知道上季度云山中学食唐各餐段陪餐记录数占比的总量、占比和变化原因",
+      "normalized_query": "我想知道上季度云山中学食唐各餐段陪餐记录数占比的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道上季度云山中学食堂各餐段陪餐记录数占比的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道上季度云山中学食堂各餐段陪餐记录数占比的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996326,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "上季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 8.4545,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0129",
+      "source": "existing_json",
+      "query": "今添是工作日还是周末？",
+      "normalized_query": "今添是工作日还是周末?",
+      "expected_corrected_query": "今天是工作日还是周末？",
+      "predicted_corrected_query": "今天是工作日还是周末?",
+      "corrections": [
+        {
+          "from": "今添",
+          "to": "今天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.989734,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 8.9571,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0130",
+      "source": "generated_negative",
+      "query": "请统计昨天广州市广园中学校服尺码统计情况，并给出排明",
+      "normalized_query": "请统计昨天广州市广园中学校服尺码统计情况，并给出排明",
+      "expected_corrected_query": "请统计昨天广州市广园中学校服尺码统计情况，并给出排名",
+      "predicted_corrected_query": "请统计昨天广州市广园中学校服尺码统计情况，并给出排名",
+      "corrections": [
+        {
+          "from": "排明",
+          "to": "排名",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003605,
+      "expected_time": {
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "predicted_time": {
+        "raw": "昨天",
+        "granularity": "day",
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "latency_ms": 8.9077,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0131",
+      "source": "generated_negative",
+      "query": "帮我查看今年越秀区门禁刷卡记绿的数据明细",
+      "normalized_query": "帮我查看今年越秀区门禁刷卡记绿的数据明细",
+      "expected_corrected_query": "帮我查看今年越秀区门禁刷卡记录的数据明细",
+      "predicted_corrected_query": "帮我查看今年越秀区门禁刷卡记录的数据明细",
+      "corrections": [
+        {
+          "from": "记绿",
+          "to": "记录",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003632,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "predicted_time": {
+        "raw": "今年",
+        "granularity": "year",
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "latency_ms": 13.4672,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0132",
+      "source": "generated_negative",
+      "query": "帮我查看今天白云区社团活动经费的数居明细",
+      "normalized_query": "帮我查看今天白云区社团活动经费的数居明细",
+      "expected_corrected_query": "帮我查看今天白云区社团活动经费的数据明细",
+      "predicted_corrected_query": "帮我查看今天白云区社团活动经费的数据明细",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003473,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 7.8769,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0133",
+      "source": "existing_json",
+      "query": "广州市白云区平安小学2026年1月的食材入库单中，是否有无供映商名称的记录？共几笔？",
+      "normalized_query": "广州市白云区平安小学2026年1月的食材入库单中，是否有无供映商名称的记录?共几笔?",
+      "expected_corrected_query": "广州市白云区平安小学2026年1月的食材入库单中，是否有无供应商名称的记录？共几笔？",
+      "predicted_corrected_query": "广州市白云区平安小学2026年1月的食材入库单中，是否有无供应商名称的记录?共几笔?",
+      "corrections": [
+        {
+          "from": "供映商",
+          "to": "供应商",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996253,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 7.7111,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0134",
+      "source": "generated_negative",
+      "query": "昨添机场路小学实验室仪器借用有没有异常，原因是什么",
+      "normalized_query": "昨添机场路小学实验室仪器借用有没有异常，原因是什么",
+      "expected_corrected_query": "昨天机场路小学实验室仪器借用有没有异常，原因是什么",
+      "predicted_corrected_query": "昨天机场路小学实验室仪器借用有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "昨添",
+          "to": "昨天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.00448,
+      "expected_time": {
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "predicted_time": {
+        "raw": "昨天",
+        "granularity": "day",
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "latency_ms": 6.8975,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0135",
+      "source": "existing_json",
+      "query": "麻烦统计上衣个月北京市中小学平均餐标是多少",
+      "normalized_query": "麻烦统计上衣个月北京市中小学平均餐标是多少",
+      "expected_corrected_query": "麻烦统计上一个月北京市中小学平均餐标是多少",
+      "predicted_corrected_query": "麻烦统计上一个月北京市中小学平均餐标是多少",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995603,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 6.8427,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0136",
+      "source": "generated_negative",
+      "query": "导出最进一个月全市办公用品领用清单，按数量排序",
+      "normalized_query": "导出最进一个月全市办公用品领用清单，按数量排序",
+      "expected_corrected_query": "导出最近一个月全市办公用品领用清单，按数量排序",
+      "predicted_corrected_query": "导出最近一个月全市办公用品领用清单，按数量排序",
+      "corrections": [
+        {
+          "from": "最进一个月",
+          "to": "最近一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003602,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 6.9153,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0137",
+      "source": "existing_json",
+      "query": "白云区平沙培英学校2026年1月的食唐收支情况",
+      "normalized_query": "白云区平沙培英学校2026年1月的食唐收支情况",
+      "expected_corrected_query": "白云区平沙培英学校2026年1月的食堂收支情况",
+      "predicted_corrected_query": "白云区平沙培英学校2026年1月的食堂收支情况",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996523,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 9.9611,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0138",
+      "source": "generated_from_excel",
+      "query": "核对最近一个月花城实验学校食堂膳食费余额记绿是否合规，缺失项有哪些",
+      "normalized_query": "核对最近一个月花城实验学校食堂膳食费余额记绿是否合规，缺失项有哪些",
+      "expected_corrected_query": "核对最近一个月花城实验学校食堂膳食费余额记录是否合规，缺失项有哪些",
+      "predicted_corrected_query": "核对最近一个月花城实验学校食堂膳食费余额记录是否合规，缺失项有哪些",
+      "corrections": [
+        {
+          "from": "记绿",
+          "to": "记录",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996427,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.1095,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0139",
+      "source": "generated_negative",
+      "query": "核对上个月越秀区停车场车位分配记绿是否完整",
+      "normalized_query": "核对上个月越秀区停车场车位分配记绿是否完整",
+      "expected_corrected_query": "核对上个月越秀区停车场车位分配记录是否完整",
+      "predicted_corrected_query": "核对上个月越秀区停车场车位分配记录是否完整",
+      "corrections": [
+        {
+          "from": "记绿",
+          "to": "记录",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003473,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.3219,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0140",
+      "source": "generated_negative",
+      "query": "导出昨添荔湾区门禁刷卡记录清单，按数量排序",
+      "normalized_query": "导出昨添荔湾区门禁刷卡记录清单，按数量排序",
+      "expected_corrected_query": "导出昨天荔湾区门禁刷卡记录清单，按数量排序",
+      "predicted_corrected_query": "导出昨天荔湾区门禁刷卡记录清单，按数量排序",
+      "corrections": [
+        {
+          "from": "昨添",
+          "to": "昨天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003266,
+      "expected_time": {
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "predicted_time": {
+        "raw": "昨天",
+        "granularity": "day",
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "latency_ms": 6.3709,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0141",
+      "source": "generated_negative",
+      "query": "我想了解去粘云山中学心理咨询预约的变化趋势",
+      "normalized_query": "我想了解去粘云山中学心理咨询预约的变化趋势",
+      "expected_corrected_query": "我想了解去年云山中学心理咨询预约的变化趋势",
+      "predicted_corrected_query": "我想了解去年云山中学心理咨询预约的变化趋势",
+      "corrections": [
+        {
+          "from": "去粘",
+          "to": "去年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003031,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 10.1671,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0142",
+      "source": "generated_from_excel",
+      "query": "2026年1月空港实验中学的利润率数据有没有风显，给出原因和整改建议",
+      "normalized_query": "2026年1月空港实验中学的利润率数据有没有风显，给出原因和整改建议",
+      "expected_corrected_query": "2026年1月空港实验中学的利润率数据有没有风险，给出原因和整改建议",
+      "predicted_corrected_query": "2026年1月空港实验中学的利润率数据有没有风险，给出原因和整改建议",
+      "corrections": [
+        {
+          "from": "风显",
+          "to": "风险",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995944,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 7.381,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0143",
+      "source": "existing_json",
+      "query": "帮我看一下上衣个月食堂的筷子消毒车好像坏了，我看见阿姨在用开水烫筷子",
+      "normalized_query": "帮我看一下上衣个月食堂的筷子消毒车好像坏了，我看见阿姨在用开水烫筷子",
+      "expected_corrected_query": "帮我看一下上一个月食堂的筷子消毒车好像坏了，我看见阿姨在用开水烫筷子",
+      "predicted_corrected_query": "帮我看一下上一个月食堂的筷子消毒车好像坏了，我看见阿姨在用开水烫筷子",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995988,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.89,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0144",
+      "source": "generated_from_excel",
+      "query": "导出上周天河区各学校食堂成夲费用金额排名，标出异常学校",
+      "normalized_query": "导出上周天河区各学校食堂成夲费用金额排名，标出异常学校",
+      "expected_corrected_query": "导出上周天河区各学校食堂成本费用金额排名，标出异常学校",
+      "predicted_corrected_query": "导出上周天河区各学校食堂成本费用金额排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "成夲",
+          "to": "成本",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995972,
+      "expected_time": {
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "predicted_time": {
+        "raw": "上周",
+        "granularity": "week",
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "latency_ms": 8.4548,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0145",
+      "source": "generated_from_excel",
+      "query": "导出今年全市各学校食堂留样记录完整率排明，标出异常学校",
+      "normalized_query": "导出今年全市各学校食堂留样记录完整率排明，标出异常学校",
+      "expected_corrected_query": "导出今年全市各学校食堂留样记录完整率排名，标出异常学校",
+      "predicted_corrected_query": "导出今年全市各学校食堂留样记录完整率排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "排明",
+          "to": "排名",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995769,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "predicted_time": {
+        "raw": "今年",
+        "granularity": "year",
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "latency_ms": 7.1943,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0146",
+      "source": "generated_negative",
+      "query": "导出上衣个月天河区体育课排课清单，按数量排序",
+      "normalized_query": "导出上衣个月天河区体育课排课清单，按数量排序",
+      "expected_corrected_query": "导出上一个月天河区体育课排课清单，按数量排序",
+      "predicted_corrected_query": "导出上一个月天河区体育课排课清单，按数量排序",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003692,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 6.2069,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0147",
+      "source": "generated_negative",
+      "query": "最进一个月花城实验学校教室投影仪维修有没有异常，原因是什么",
+      "normalized_query": "最进一个月花城实验学校教室投影仪维修有没有异常，原因是什么",
+      "expected_corrected_query": "最近一个月花城实验学校教室投影仪维修有没有异常，原因是什么",
+      "predicted_corrected_query": "最近一个月花城实验学校教室投影仪维修有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "最进一个月",
+          "to": "最近一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003978,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 7.9766,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0148",
+      "source": "existing_json",
+      "query": "今天食唐的菜太咸了，我想反映一下。",
+      "normalized_query": "今天食唐的菜太咸了，我想反映一下。",
+      "expected_corrected_query": "今天食堂的菜太咸了，我想反映一下。",
+      "predicted_corrected_query": "今天食堂的菜太咸了，我想反映一下。",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995403,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 8.202,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0149",
+      "source": "existing_json",
+      "query": "请查询上一个月食唐最近安装的空调好凉快，给我推荐一下什么品牌的？",
+      "normalized_query": "请查询上一个月食唐最近安装的空调好凉快，给我推荐一下什么品牌的?",
+      "expected_corrected_query": "请查询上一个月食堂最近安装的空调好凉快，给我推荐一下什么品牌的？",
+      "predicted_corrected_query": "请查询上一个月食堂最近安装的空调好凉快，给我推荐一下什么品牌的?",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996094,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.4188,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0150",
+      "source": "generated_from_excel",
+      "query": "导出2026年1月天河区各学校食唐留样记录数排名，标出异常学校",
+      "normalized_query": "导出2026年1月天河区各学校食唐留样记录数排名，标出异常学校",
+      "expected_corrected_query": "导出2026年1月天河区各学校食堂留样记录数排名，标出异常学校",
+      "predicted_corrected_query": "导出2026年1月天河区各学校食堂留样记录数排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996333,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 6.5024,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0151",
+      "source": "existing_json",
+      "query": "请统计白云区2026年第一季度单次消费均值超过20元的学效总数，并分析这些学校在各片区的分布是否集中？主要集中在哪几个片区？",
+      "normalized_query": "请统计白云区2026年第一季度单次消费均值超过20元的学效总数，并分析这些学校在各片区的分布是否集中?主要集中在哪几个片区?",
+      "expected_corrected_query": "请统计白云区2026年第一季度单次消费均值超过20元的学校总数，并分析这些学校在各片区的分布是否集中？主要集中在哪几个片区？",
+      "predicted_corrected_query": "请统计白云区2026年第一季度单次消费均值超过20元的学校总数，并分析这些学校在各片区的分布是否集中?主要集中在哪几个片区?",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995808,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "2026年第一季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 8.0126,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0152",
+      "source": "existing_json",
+      "query": "我想了解上衣个月食堂那个‘今日供应’的屏幕太亮了，刺眼",
+      "normalized_query": "我想了解上衣个月食堂那个‘今日供应’的屏幕太亮了，刺眼",
+      "expected_corrected_query": "我想了解上一个月食堂那个‘今日供应’的屏幕太亮了，刺眼",
+      "predicted_corrected_query": "我想了解上一个月食堂那个‘今日供应’的屏幕太亮了，刺眼",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996419,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.012,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0153",
+      "source": "generated_negative",
+      "query": "帮我查看上衣个月黄埔区社团活动经费的数据明细",
+      "normalized_query": "帮我查看上衣个月黄埔区社团活动经费的数据明细",
+      "expected_corrected_query": "帮我查看上一个月黄埔区社团活动经费的数据明细",
+      "predicted_corrected_query": "帮我查看上一个月黄埔区社团活动经费的数据明细",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.005682,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.3412,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0154",
+      "source": "generated_from_excel",
+      "query": "我想知道最进一周市桥实验学校食堂陪餐发现问题数的总量、占比和变化原因",
+      "normalized_query": "我想知道最进一周市桥实验学校食堂陪餐发现问题数的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道最近一周市桥实验学校食堂陪餐发现问题数的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道最近一周市桥实验学校食堂陪餐发现问题数的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "最进一周",
+          "to": "最近一周",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996548,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 8.2854,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0155",
+      "source": "generated_from_excel",
+      "query": "分析昨添番禺区校园餐环境卫生趋势，并和上一周期做对比",
+      "normalized_query": "分析昨添番禺区校园餐环境卫生趋势，并和上一周期做对比",
+      "expected_corrected_query": "分析昨天番禺区校园餐环境卫生趋势，并和上一周期做对比",
+      "predicted_corrected_query": "分析昨天番禺区校园餐环境卫生趋势，并和上一周期做对比",
+      "corrections": [
+        {
+          "from": "昨添",
+          "to": "昨天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996013,
+      "expected_time": {
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "predicted_time": {
+        "raw": "昨天",
+        "granularity": "day",
+        "start": "2026-05-06",
+        "end": "2026-05-06"
+      },
+      "latency_ms": 6.8439,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0156",
+      "source": "generated_negative",
+      "query": "晴况我想了解上周空港实验中学体育课排课的变化趋势",
+      "normalized_query": "晴况我想了解上周空港实验中学体育课排课的变化趋势",
+      "expected_corrected_query": "情况我想了解上周空港实验中学体育课排课的变化趋势",
+      "predicted_corrected_query": "情况我想了解上周空港实验中学体育课排课的变化趋势",
+      "corrections": [
+        {
+          "from": "晴况",
+          "to": "情况",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003708,
+      "expected_time": {
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "predicted_time": {
+        "raw": "上周",
+        "granularity": "week",
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "latency_ms": 6.7898,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0157",
+      "source": "generated_negative",
+      "query": "导出上衣个月天河区图书采购预算清单，按数量排序",
+      "normalized_query": "导出上衣个月天河区图书采购预算清单，按数量排序",
+      "expected_corrected_query": "导出上一个月天河区图书采购预算清单，按数量排序",
+      "predicted_corrected_query": "导出上一个月天河区图书采购预算清单，按数量排序",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003363,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.0294,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0158",
+      "source": "generated_negative",
+      "query": "请统记今年培英学校停车场车位分配情况，并给出排名",
+      "normalized_query": "请统记今年培英学校停车场车位分配情况，并给出排名",
+      "expected_corrected_query": "请统计今年培英学校停车场车位分配情况，并给出排名",
+      "predicted_corrected_query": "请统计今年培英学校停车场车位分配情况，并给出排名",
+      "corrections": [
+        {
+          "from": "统记",
+          "to": "统计",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003764,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "predicted_time": {
+        "raw": "今年",
+        "granularity": "year",
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "latency_ms": 8.1145,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0159",
+      "source": "generated_negative",
+      "query": "我想了解上一个月空港实验中学教师考勤统记的变化趋势",
+      "normalized_query": "我想了解上一个月空港实验中学教师考勤统记的变化趋势",
+      "expected_corrected_query": "我想了解上一个月空港实验中学教师考勤统计的变化趋势",
+      "predicted_corrected_query": "我想了解上一个月空港实验中学教师考勤统计的变化趋势",
+      "corrections": [
+        {
+          "from": "统记",
+          "to": "统计",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.007062,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.511,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0160",
+      "source": "generated_from_excel",
+      "query": "我想知道上一个月空港实验中学食唐食安监管的总量、占比和变化原因",
+      "normalized_query": "我想知道上一个月空港实验中学食唐食安监管的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道上一个月空港实验中学食堂食安监管的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道上一个月空港实验中学食堂食安监管的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996529,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 6.8479,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0161",
+      "source": "generated_negative",
+      "query": "导出去粘番禺区停车场车位分配清单，按数量排序",
+      "normalized_query": "导出去粘番禺区停车场车位分配清单，按数量排序",
+      "expected_corrected_query": "导出去年番禺区停车场车位分配清单，按数量排序",
+      "predicted_corrected_query": "导出去年番禺区停车场车位分配清单，按数量排序",
+      "corrections": [
+        {
+          "from": "去粘",
+          "to": "去年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003439,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 7.3483,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0162",
+      "source": "generated_from_excel",
+      "query": "分析本季度全市校园餐食材成夲趋势，并和上一周期做对比",
+      "normalized_query": "分析本季度全市校园餐食材成夲趋势，并和上一周期做对比",
+      "expected_corrected_query": "分析本季度全市校园餐食材成本趋势，并和上一周期做对比",
+      "predicted_corrected_query": "分析本季度全市校园餐食材成本趋势，并和上一周期做对比",
+      "corrections": [
+        {
+          "from": "成夲",
+          "to": "成本",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996326,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "predicted_time": {
+        "raw": "本季度",
+        "granularity": "quarter",
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "latency_ms": 8.2528,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0163",
+      "source": "generated_from_excel",
+      "query": "请统计上个玥白云区第一小学食堂的留样温度异常次数情况，并说明是否存在异常",
+      "normalized_query": "请统计上个玥白云区第一小学食堂的留样温度异常次数情况，并说明是否存在异常",
+      "expected_corrected_query": "请统计上个月白云区第一小学食堂的留样温度异常次数情况，并说明是否存在异常",
+      "predicted_corrected_query": "请统计上个月白云区第一小学食堂的留样温度异常次数情况，并说明是否存在异常",
+      "corrections": [
+        {
+          "from": "上个玥",
+          "to": "上个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996514,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.9047,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0164",
+      "source": "generated_from_excel",
+      "query": "请统计最近一周市桥实验学效食堂的其他异常人数情况，并说明是否存在异常",
+      "normalized_query": "请统计最近一周市桥实验学效食堂的其他异常人数情况，并说明是否存在异常",
+      "expected_corrected_query": "请统计最近一周市桥实验学校食堂的其他异常人数情况，并说明是否存在异常",
+      "predicted_corrected_query": "请统计最近一周市桥实验学校食堂的其他异常人数情况，并说明是否存在异常",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996446,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 12.2182,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0165",
+      "source": "generated_negative",
+      "query": "数居导出2026年1月越秀区校车路线优化清单，按数量排序",
+      "normalized_query": "数居导出2026年1月越秀区校车路线优化清单，按数量排序",
+      "expected_corrected_query": "数据导出2026年1月越秀区校车路线优化清单，按数量排序",
+      "predicted_corrected_query": "数据导出2026年1月越秀区校车路线优化清单，按数量排序",
+      "corrections": [
+        {
+          "from": "数居",
+          "to": "数据",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003222,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 9.961,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0166",
+      "source": "generated_negative",
+      "query": "导出上衣个月番禺区会议室预约清单，按数量排序",
+      "normalized_query": "导出上衣个月番禺区会议室预约清单，按数量排序",
+      "expected_corrected_query": "导出上一个月番禺区会议室预约清单，按数量排序",
+      "predicted_corrected_query": "导出上一个月番禺区会议室预约清单，按数量排序",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003187,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.6629,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0167",
+      "source": "generated_negative",
+      "query": "导出笨季度番禺区实验室仪器借用清单，按数量排序",
+      "normalized_query": "导出笨季度番禺区实验室仪器借用清单，按数量排序",
+      "expected_corrected_query": "导出本季度番禺区实验室仪器借用清单，按数量排序",
+      "predicted_corrected_query": "导出本季度番禺区实验室仪器借用清单，按数量排序",
+      "corrections": [
+        {
+          "from": "笨季度",
+          "to": "本季度",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003448,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "predicted_time": {
+        "raw": "本季度",
+        "granularity": "quarter",
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "latency_ms": 6.1686,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0168",
+      "source": "generated_from_excel",
+      "query": "导出2026年1月番禺区各学效食堂支出排名，标出异常学校",
+      "normalized_query": "导出2026年1月番禺区各学效食堂支出排名，标出异常学校",
+      "expected_corrected_query": "导出2026年1月番禺区各学校食堂支出排名，标出异常学校",
+      "predicted_corrected_query": "导出2026年1月番禺区各学校食堂支出排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995791,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 10.2824,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0169",
+      "source": "generated_negative",
+      "query": "我想了解本季度培英学效图书采购预算的变化趋势",
+      "normalized_query": "我想了解本季度培英学效图书采购预算的变化趋势",
+      "expected_corrected_query": "我想了解本季度培英学校图书采购预算的变化趋势",
+      "predicted_corrected_query": "我想了解本季度培英学校图书采购预算的变化趋势",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003283,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "predicted_time": {
+        "raw": "本季度",
+        "granularity": "quarter",
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "latency_ms": 16.8565,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0170",
+      "source": "generated_negative",
+      "query": "导出最进一个月全市图书馆借阅排行清单，按数量排序",
+      "normalized_query": "导出最进一个月全市图书馆借阅排行清单，按数量排序",
+      "expected_corrected_query": "导出最近一个月全市图书馆借阅排行清单，按数量排序",
+      "predicted_corrected_query": "导出最近一个月全市图书馆借阅排行清单，按数量排序",
+      "corrections": [
+        {
+          "from": "最进一个月",
+          "to": "最近一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003488,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.0947,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0171",
+      "source": "generated_from_excel",
+      "query": "核对最近一周市桥实验学效食堂菜品直观评价的差评数记录是否合规，缺失项有哪些",
+      "normalized_query": "核对最近一周市桥实验学效食堂菜品直观评价的差评数记录是否合规，缺失项有哪些",
+      "expected_corrected_query": "核对最近一周市桥实验学校食堂菜品直观评价的差评数记录是否合规，缺失项有哪些",
+      "predicted_corrected_query": "核对最近一周市桥实验学校食堂菜品直观评价的差评数记录是否合规，缺失项有哪些",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996262,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 8.1868,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0172",
+      "source": "existing_json",
+      "query": "帮我看一下上一个月我想查一下我们学效食堂的承包商是哪家公司，法人是谁？",
+      "normalized_query": "帮我看一下上一个月我想查一下我们学效食堂的承包商是哪家公司，法人是谁?",
+      "expected_corrected_query": "帮我看一下上一个月我想查一下我们学校食堂的承包商是哪家公司，法人是谁？",
+      "predicted_corrected_query": "帮我看一下上一个月我想查一下我们学校食堂的承包商是哪家公司，法人是谁?",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996403,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 11.0388,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0173",
+      "source": "existing_json",
+      "query": "麻烦统记上一个月广州市白云区石井片区3月份的餐标是多少",
+      "normalized_query": "麻烦统记上一个月广州市白云区石井片区3月份的餐标是多少",
+      "expected_corrected_query": "麻烦统计上一个月广州市白云区石井片区3月份的餐标是多少",
+      "predicted_corrected_query": "麻烦统计上一个月广州市白云区石井片区3月份的餐标是多少",
+      "corrections": [
+        {
+          "from": "统记",
+          "to": "统计",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996275,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.3914,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0174",
+      "source": "generated_negative",
+      "query": "导出去粘天河区办公用品领用清单，按数量排序",
+      "normalized_query": "导出去粘天河区办公用品领用清单，按数量排序",
+      "expected_corrected_query": "导出去年天河区办公用品领用清单，按数量排序",
+      "predicted_corrected_query": "导出去年天河区办公用品领用清单，按数量排序",
+      "corrections": [
+        {
+          "from": "去粘",
+          "to": "去年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003201,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 9.223,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0175",
+      "source": "existing_json",
+      "query": "麻烦统计上一个月我想了解一下我们学校食唐的食材供应商是那个公司？他们的资质全吗？",
+      "normalized_query": "麻烦统计上一个月我想了解一下我们学校食唐的食材供应商是那个公司?他们的资质全吗?",
+      "expected_corrected_query": "麻烦统计上一个月我想了解一下我们学校食堂的食材供应商是那个公司？他们的资质全吗？",
+      "predicted_corrected_query": "麻烦统计上一个月我想了解一下我们学校食堂的食材供应商是那个公司?他们的资质全吗?",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.99642,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.0065,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0176",
+      "source": "existing_json",
+      "query": "请列出广州市白云区嘉禾新都学效2026年1月因超过保质期而销毁的食品名称、单位及数量。",
+      "normalized_query": "请列出广州市白云区嘉禾新都学效2026年1月因超过保质期而销毁的食品名称、单位及数量。",
+      "expected_corrected_query": "请列出广州市白云区嘉禾新都学校2026年1月因超过保质期而销毁的食品名称、单位及数量。",
+      "predicted_corrected_query": "请列出广州市白云区嘉禾新都学校2026年1月因超过保质期而销毁的食品名称、单位及数量。",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995723,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 9.6953,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0177",
+      "source": "existing_json",
+      "query": "帮我看一下上衣个月空港实验中学前1个月的收支情况怎么样？",
+      "normalized_query": "帮我看一下上衣个月空港实验中学前1个月的收支情况怎么样?",
+      "expected_corrected_query": "帮我看一下上一个月空港实验中学前1个月的收支情况怎么样？",
+      "predicted_corrected_query": "帮我看一下上一个月空港实验中学前1个月的收支情况怎么样?",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996225,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 7.9035,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0178",
+      "source": "generated_from_excel",
+      "query": "导出最进一周天河区各学校食堂健康证有效率排名，标出异常学校",
+      "normalized_query": "导出最进一周天河区各学校食堂健康证有效率排名，标出异常学校",
+      "expected_corrected_query": "导出最近一周天河区各学校食堂健康证有效率排名，标出异常学校",
+      "predicted_corrected_query": "导出最近一周天河区各学校食堂健康证有效率排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "最进一周",
+          "to": "最近一周",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995938,
+      "expected_time": {
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一周",
+        "granularity": "recent_range",
+        "start": "2026-05-01",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.393,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0179",
+      "source": "existing_json",
+      "query": "麻烦统计上一个月孩子学效安转了新的投影仪，我想问一下上课效果怎么样？",
+      "normalized_query": "麻烦统计上一个月孩子学效安转了新的投影仪，我想问一下上课效果怎么样?",
+      "expected_corrected_query": "麻烦统计上一个月孩子学校安转了新的投影仪，我想问一下上课效果怎么样？",
+      "predicted_corrected_query": "麻烦统计上一个月孩子学校安转了新的投影仪，我想问一下上课效果怎么样?",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.993587,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 14.3206,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0180",
+      "source": "generated_negative",
+      "query": "核对今年荔湾区运动会报名名单记绿是否完整",
+      "normalized_query": "核对今年荔湾区运动会报名名单记绿是否完整",
+      "expected_corrected_query": "核对今年荔湾区运动会报名名单记录是否完整",
+      "predicted_corrected_query": "核对今年荔湾区运动会报名名单记录是否完整",
+      "corrections": [
+        {
+          "from": "记绿",
+          "to": "记录",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003373,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "predicted_time": {
+        "raw": "今年",
+        "granularity": "year",
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "latency_ms": 11.7362,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0181",
+      "source": "generated_negative",
+      "query": "我想了解今添市桥实验学校社团活动经费的变化趋势",
+      "normalized_query": "我想了解今添市桥实验学校社团活动经费的变化趋势",
+      "expected_corrected_query": "我想了解今天市桥实验学校社团活动经费的变化趋势",
+      "predicted_corrected_query": "我想了解今天市桥实验学校社团活动经费的变化趋势",
+      "corrections": [
+        {
+          "from": "今添",
+          "to": "今天",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003201,
+      "expected_time": {
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "今天",
+        "granularity": "day",
+        "start": "2026-05-07",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 9.4823,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0182",
+      "source": "existing_json",
+      "query": "我想了解上一个月帮我生成一下空港中学晨检台帐的报告",
+      "normalized_query": "我想了解上一个月帮我生成一下空港中学晨检台帐的报告",
+      "expected_corrected_query": "我想了解上一个月帮我生成一下空港中学晨检台账的报告",
+      "predicted_corrected_query": "我想了解上一个月帮我生成一下空港中学晨检台账的报告",
+      "corrections": [
+        {
+          "from": "台帐",
+          "to": "台账",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995282,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 6.085,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0183",
+      "source": "generated_negative",
+      "query": "我想了解上个玥机场路小学宿舍空调维修的变化趋势",
+      "normalized_query": "我想了解上个玥机场路小学宿舍空调维修的变化趋势",
+      "expected_corrected_query": "我想了解上个月机场路小学宿舍空调维修的变化趋势",
+      "predicted_corrected_query": "我想了解上个月机场路小学宿舍空调维修的变化趋势",
+      "corrections": [
+        {
+          "from": "上个玥",
+          "to": "上个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003865,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 13.4664,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0184",
+      "source": "generated_negative",
+      "query": "导出最近一个月荔湾区校服尺码统记清单，按数量排序",
+      "normalized_query": "导出最近一个月荔湾区校服尺码统记清单，按数量排序",
+      "expected_corrected_query": "导出最近一个月荔湾区校服尺码统计清单，按数量排序",
+      "predicted_corrected_query": "导出最近一个月荔湾区校服尺码统计清单，按数量排序",
+      "corrections": [
+        {
+          "from": "统记",
+          "to": "统计",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003433,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 10.9826,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0185",
+      "source": "existing_json",
+      "query": "分析一下广州空港实验中学2026年3月陪餐晴况",
+      "normalized_query": "分析一下广州空港实验中学2026年3月陪餐晴况",
+      "expected_corrected_query": "分析一下广州空港实验中学2026年3月陪餐情况",
+      "predicted_corrected_query": "分析一下广州空港实验中学2026年3月陪餐情况",
+      "corrections": [
+        {
+          "from": "晴况",
+          "to": "情况",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995883,
+      "expected_time": {
+        "start": "2026-03-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "2026年3月",
+        "granularity": "month",
+        "start": "2026-03-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 7.2231,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0186",
+      "source": "existing_json",
+      "query": "请查洵上一个月我饭卡里突然少了20块钱，但我的消费记录里没有这笔支出，怎么回事？",
+      "normalized_query": "请查洵上一个月我饭卡里突然少了20块钱，但我的消费记录里没有这笔支出，怎么回事?",
+      "expected_corrected_query": "请查询上一个月我饭卡里突然少了20块钱，但我的消费记录里没有这笔支出，怎么回事？",
+      "predicted_corrected_query": "请查询上一个月我饭卡里突然少了20块钱，但我的消费记录里没有这笔支出，怎么回事?",
+      "corrections": [
+        {
+          "from": "查洵",
+          "to": "查询",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.99551,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 6.4442,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": false
+    },
+    {
+      "id": "test_0187",
+      "source": "generated_from_excel",
+      "query": "导出2026年1月荔湾区各学校食堂流样记录完整率排名，标出异常学校",
+      "normalized_query": "导出2026年1月荔湾区各学校食堂流样记录完整率排名，标出异常学校",
+      "expected_corrected_query": "导出2026年1月荔湾区各学校食堂留样记录完整率排名，标出异常学校",
+      "predicted_corrected_query": "导出2026年1月荔湾区各学校食堂留样记录完整率排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "流样",
+          "to": "留样",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996189,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 17.486,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0188",
+      "source": "generated_from_excel",
+      "query": "导出上一个月荔湾区各学效食堂营业收入结构金额排名，标出异常学校",
+      "normalized_query": "导出上一个月荔湾区各学效食堂营业收入结构金额排名，标出异常学校",
+      "expected_corrected_query": "导出上一个月荔湾区各学校食堂营业收入结构金额排名，标出异常学校",
+      "predicted_corrected_query": "导出上一个月荔湾区各学校食堂营业收入结构金额排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.99647,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 10.2506,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0189",
+      "source": "generated_from_excel",
+      "query": "我想知道笨季度岭南附属中学食堂收入总金额的总量、占比和变化原因",
+      "normalized_query": "我想知道笨季度岭南附属中学食堂收入总金额的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道本季度岭南附属中学食堂收入总金额的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道本季度岭南附属中学食堂收入总金额的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "笨季度",
+          "to": "本季度",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996712,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "predicted_time": {
+        "raw": "本季度",
+        "granularity": "quarter",
+        "start": "2026-04-01",
+        "end": "2026-06-30"
+      },
+      "latency_ms": 9.0838,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0190",
+      "source": "existing_json",
+      "query": "请查洵上一个月帮我生成一份财务报告",
+      "normalized_query": "请查洵上一个月帮我生成一份财务报告",
+      "expected_corrected_query": "请查询上一个月帮我生成一份财务报告",
+      "predicted_corrected_query": "请查询上一个月帮我生成一份财务报告",
+      "corrections": [
+        {
+          "from": "查洵",
+          "to": "查询",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.994053,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 11.3666,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0191",
+      "source": "generated_negative",
+      "query": "2026年1月机场路小学效园网故障有没有异常，原因是什么",
+      "normalized_query": "2026年1月机场路小学效园网故障有没有异常，原因是什么",
+      "expected_corrected_query": "2026年1月机场路小学校园网故障有没有异常，原因是什么",
+      "predicted_corrected_query": "2026年1月机场路小学校园网故障有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "学效",
+          "to": "学校",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.00612,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "predicted_time": {
+        "raw": "2026年1月",
+        "granularity": "month",
+        "start": "2026-01-01",
+        "end": "2026-01-31"
+      },
+      "latency_ms": 10.3628,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0192",
+      "source": "generated_negative",
+      "query": "导出今粘荔湾区社团活动经费清单，按数量排序",
+      "normalized_query": "导出今粘荔湾区社团活动经费清单，按数量排序",
+      "expected_corrected_query": "导出今年荔湾区社团活动经费清单，按数量排序",
+      "predicted_corrected_query": "导出今年荔湾区社团活动经费清单，按数量排序",
+      "corrections": [
+        {
+          "from": "今粘",
+          "to": "今年",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003348,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "predicted_time": {
+        "raw": "今年",
+        "granularity": "year",
+        "start": "2026-01-01",
+        "end": "2026-12-31"
+      },
+      "latency_ms": 10.8064,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0193",
+      "source": "generated_from_excel",
+      "query": "导出上衣个月天河区各学校食堂体温异常人数排名，标出异常学校",
+      "normalized_query": "导出上衣个月天河区各学校食堂体温异常人数排名，标出异常学校",
+      "expected_corrected_query": "导出上一个月天河区各学校食堂体温异常人数排名，标出异常学校",
+      "predicted_corrected_query": "导出上一个月天河区各学校食堂体温异常人数排名，标出异常学校",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996431,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 8.2942,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0194",
+      "source": "generated_negative",
+      "query": "请统记去年花城实验学校心理咨询预约情况，并给出排名",
+      "normalized_query": "请统记去年花城实验学校心理咨询预约情况，并给出排名",
+      "expected_corrected_query": "请统计去年花城实验学校心理咨询预约情况，并给出排名",
+      "predicted_corrected_query": "请统计去年花城实验学校心理咨询预约情况，并给出排名",
+      "corrections": [
+        {
+          "from": "统记",
+          "to": "统计",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.003624,
+      "expected_time": {
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "predicted_time": {
+        "raw": "去年",
+        "granularity": "year",
+        "start": "2025-01-01",
+        "end": "2025-12-31"
+      },
+      "latency_ms": 8.184,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0195",
+      "source": "generated_from_excel",
+      "query": "我想知道上季度明德小学食堂利闰总金额的总量、占比和变化原因",
+      "normalized_query": "我想知道上季度明德小学食堂利闰总金额的总量、占比和变化原因",
+      "expected_corrected_query": "我想知道上季度明德小学食堂利润总金额的总量、占比和变化原因",
+      "predicted_corrected_query": "我想知道上季度明德小学食堂利润总金额的总量、占比和变化原因",
+      "corrections": [
+        {
+          "from": "利闰",
+          "to": "利润",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996547,
+      "expected_time": {
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "predicted_time": {
+        "raw": "上季度",
+        "granularity": "quarter",
+        "start": "2026-01-01",
+        "end": "2026-03-31"
+      },
+      "latency_ms": 8.6003,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0196",
+      "source": "generated_from_excel",
+      "query": "请统计最近一个月广州市广园中学食唐的健康证情况，并说明是否存在异常",
+      "normalized_query": "请统计最近一个月广州市广园中学食唐的健康证情况，并说明是否存在异常",
+      "expected_corrected_query": "请统计最近一个月广州市广园中学食堂的健康证情况，并说明是否存在异常",
+      "predicted_corrected_query": "请统计最近一个月广州市广园中学食堂的健康证情况，并说明是否存在异常",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996437,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 13.083,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0197",
+      "source": "generated_negative",
+      "query": "最进一个月机场路小学家长会签到有没有异常，原因是什么",
+      "normalized_query": "最进一个月机场路小学家长会签到有没有异常，原因是什么",
+      "expected_corrected_query": "最近一个月机场路小学家长会签到有没有异常，原因是什么",
+      "predicted_corrected_query": "最近一个月机场路小学家长会签到有没有异常，原因是什么",
+      "corrections": [
+        {
+          "from": "最进一个月",
+          "to": "最近一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "out_domain",
+      "predicted_intent": "out_domain",
+      "in_domain_score": 0.005556,
+      "expected_time": {
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "predicted_time": {
+        "raw": "最近一个月",
+        "granularity": "recent_range",
+        "start": "2026-04-08",
+        "end": "2026-05-07"
+      },
+      "latency_ms": 7.7819,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0198",
+      "source": "existing_json",
+      "query": "我想了解上衣个月帮我生成一份属于我的菜品推荐",
+      "normalized_query": "我想了解上衣个月帮我生成一份属于我的菜品推荐",
+      "expected_corrected_query": "我想了解上一个月帮我生成一份属于我的菜品推荐",
+      "predicted_corrected_query": "我想了解上一个月帮我生成一份属于我的菜品推荐",
+      "corrections": [
+        {
+          "from": "上衣个月",
+          "to": "上一个月",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.995183,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 13.8031,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0199",
+      "source": "generated_from_excel",
+      "query": "筛查上周黄埔区食唐业务里健康证过期人数异常的学校名单",
+      "normalized_query": "筛查上周黄埔区食唐业务里健康证过期人数异常的学校名单",
+      "expected_corrected_query": "筛查上周黄埔区食堂业务里健康证过期人数异常的学校名单",
+      "predicted_corrected_query": "筛查上周黄埔区食堂业务里健康证过期人数异常的学校名单",
+      "corrections": [
+        {
+          "from": "食唐",
+          "to": "食堂",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996313,
+      "expected_time": {
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "predicted_time": {
+        "raw": "上周",
+        "granularity": "week",
+        "start": "2026-04-27",
+        "end": "2026-05-03"
+      },
+      "latency_ms": 7.7479,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    },
+    {
+      "id": "test_0200",
+      "source": "existing_json",
+      "query": "请查询上一个月查询空港实验中学前1个月的食堂收入与枝出数据",
+      "normalized_query": "请查询上一个月查询空港实验中学前1个月的食堂收入与枝出数据",
+      "expected_corrected_query": "请查询上一个月查询空港实验中学前1个月的食堂收入与支出数据",
+      "predicted_corrected_query": "请查询上一个月查询空港实验中学前1个月的食堂收入与支出数据",
+      "corrections": [
+        {
+          "from": "枝出",
+          "to": "支出",
+          "type": "domain_dictionary",
+          "confidence": 0.96
+        }
+      ],
+      "expected_intent": "in_domain",
+      "predicted_intent": "in_domain",
+      "in_domain_score": 0.996331,
+      "expected_time": {
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "predicted_time": {
+        "raw": "上一个月",
+        "granularity": "month",
+        "start": "2026-04-01",
+        "end": "2026-04-30"
+      },
+      "latency_ms": 9.6218,
+      "intent_correct": true,
+      "time_correct": true,
+      "correction_correct": true
+    }
+  ]
+}

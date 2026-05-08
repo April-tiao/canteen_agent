@@ -1,0 +1,34 @@
+{
+  "data": "..\\canteen_query_dataset.json",
+  "base_model": "uer/chinese_roberta_L-4_H-512",
+  "train_size": 800,
+  "eval_size": 200,
+  "eval_accuracy": 1.0,
+  "classification_report": {
+    "out_domain": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 80.0
+    },
+    "in_domain": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 120.0
+    },
+    "accuracy": 1.0,
+    "macro avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 200.0
+    },
+    "weighted avg": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 200.0
+    }
+  }
+}

@@ -1,12 +1,14 @@
 __pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+*.pyc
 .venv/
 venv/
 env/
-.env
-*.log
-.tools/
-artifacts/model_cache/
+.DS_Store
+Thumbs.db
+
+# Local/raw image data can be several GB.
+cv3/image_dataset_3class/
+
+# Local archives and scratch outputs.
+*.zip
+*.tmp
