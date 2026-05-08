@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import json
 import statistics
 import sys
@@ -11,6 +12,7 @@ from typing import Any
 import numpy as np
 import torch
 from PIL import Image
+import cv2
 
 from canteen_3class_experiment import IMAGE_EXTS, INDEX_TO_LABEL, LABEL_TO_INDEX, build_model, build_transforms
 
@@ -34,6 +36,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--image-data-dir", default="image_dataset_3class")
     parser.add_argument("--image-checkpoint", default="outputs_mnv3_3class_160/best_model.pt")
     parser.add_argument("--image-size", type=int, default=None)
+    parser.add_argument("--image-backend", choices=["pil", "opencv"], default="opencv")
+    parser.add_argument("--max-image-bytes", type=int, default=8_000_000)
+    parser.add_argument("--max-image-pixels", type=int, default=4_000_000)
+    parser.add_argument("--decode-reduction", type=int, choices=[1, 2, 4, 8], default=1)
+    parser.add_argument("--cv-threads", type=int, default=1)
     parser.add_argument("--pair-mode", choices=["cycle", "manifest"], default="cycle")
     parser.add_argument("--pair-manifest", default=None)
     parser.add_argument("--device", default="auto")
@@ -143,7 +150,18 @@ class TextIntentRuntime:
 
 
 class ImageIntentRuntime:
-    def __init__(self, checkpoint_path: Path, image_size: int | None, device_name: str) -> None:
+    def __init__(
+        self,
+        checkpoint_path: Path,
+        image_size: int | None,
+        device_name: str,
+        *,
+        backend: str = "opencv",
+        max_image_bytes: int = 8_000_000,
+        max_image_pixels: int = 4_000_000,
+        decode_reduction: int = 1,
+        cv_threads: int = 1,
+    ) -> None:
         if device_name == "auto":
             self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         else:
@@ -155,12 +173,48 @@ class ImageIntentRuntime:
         self.model.eval()
         self.image_size = image_size or int(checkpoint.get("image_size", 160))
         _, self.transform = build_transforms(self.image_size)
+        self.backend = backend
+        self.max_image_bytes = max_image_bytes
+        self.max_image_pixels = max_image_pixels
+        self.decode_reduction = decode_reduction
+        cv2.setNumThreads(cv_threads)
+        self.mean = np.asarray([0.485, 0.456, 0.406], dtype=np.float32)
+        self.std = np.asarray([0.229, 0.224, 0.225], dtype=np.float32)
 
     @torch.no_grad()
     def predict(self, path: Path) -> dict[str, Any]:
+        if self.backend == "opencv":
+            return self.predict_bytes(path.read_bytes())
         with Image.open(path) as img:
             tensor = self.transform(img).unsqueeze(0).to(self.device)
         return self.predict_tensor(tensor)
+
+    @torch.no_grad()
+    def predict_bytes(self, image_bytes: bytes) -> dict[str, Any]:
+        tensor = self.bytes_to_tensor(image_bytes)
+        return self.predict_tensor(tensor)
+
+    def bytes_to_tensor(self, image_bytes: bytes) -> torch.Tensor:
+        if len(image_bytes) > self.max_image_bytes:
+            raise ValueError(f"image too large: {len(image_bytes)} bytes > {self.max_image_bytes}")
+        encoded = np.frombuffer(image_bytes, dtype=np.uint8)
+        decode_flag = {
+            1: cv2.IMREAD_COLOR,
+            2: cv2.IMREAD_REDUCED_COLOR_2,
+            4: cv2.IMREAD_REDUCED_COLOR_4,
+            8: cv2.IMREAD_REDUCED_COLOR_8,
+        }[self.decode_reduction]
+        image = cv2.imdecode(encoded, decode_flag)
+        if image is None:
+            raise ValueError("failed to decode image bytes")
+        height, width = image.shape[:2]
+        if height * width > self.max_image_pixels:
+            raise ValueError(f"image too many pixels: {height * width} > {self.max_image_pixels}")
+        image = cv2.resize(image, (self.image_size, self.image_size), interpolation=cv2.INTER_AREA)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32) / 255.0
+        image = (image - self.mean) / self.std
+        image = np.transpose(image, (2, 0, 1))[None, ...]
+        return torch.from_numpy(np.ascontiguousarray(image)).to(self.device)
 
     @torch.no_grad()
     def predict_tensor(self, tensor: torch.Tensor) -> dict[str, Any]:
@@ -282,7 +336,12 @@ def evaluate_image(runtime: ImageIntentRuntime, samples: list[tuple[Path, int, i
 
     for path, image_gold, intent_gold in samples:
         started = time.perf_counter_ns()
-        pred = runtime.predict(path)
+        try:
+            pred = runtime.predict(path)
+            error = None
+        except ValueError as exc:
+            pred = {"label": 0, "intent": "out_domain", "image_class": "rejected"}
+            error = str(exc)
         latency_ms = (time.perf_counter_ns() - started) / 1_000_000
         latencies.append(latency_ms)
         correct += int(pred["label"] == intent_gold)
@@ -297,6 +356,7 @@ def evaluate_image(runtime: ImageIntentRuntime, samples: list[tuple[Path, int, i
                 "predicted_intent": pred["intent"],
                 "latency_ms": round(latency_ms, 4),
                 "correct": pred["label"] == intent_gold,
+                "error": error,
             }
         )
 
@@ -312,8 +372,14 @@ def evaluate_image(runtime: ImageIntentRuntime, samples: list[tuple[Path, int, i
 def evaluate_image_inference_latency(runtime: ImageIntentRuntime, samples: list[tuple[Path, int, int]]) -> dict[str, float]:
     tensors = []
     for path, _, _ in samples:
-        with Image.open(path) as img:
-            tensors.append(runtime.transform(img).unsqueeze(0).to(runtime.device))
+        try:
+            if runtime.backend == "opencv":
+                tensors.append(runtime.bytes_to_tensor(path.read_bytes()))
+            else:
+                with Image.open(path) as img:
+                    tensors.append(runtime.transform(img).unsqueeze(0).to(runtime.device))
+        except ValueError:
+            continue
 
     for tensor in tensors[:20]:
         runtime.predict_tensor(tensor)
@@ -346,6 +412,7 @@ def evaluate_pairs(
     image_latencies: list[float] = []
     sequential_latencies: list[float] = []
     parallel_estimated_latencies: list[float] = []
+    true_parallel_latencies: list[float] = []
     details: list[dict[str, Any]] = []
     correct = 0
 
@@ -358,8 +425,24 @@ def evaluate_pairs(
         text_latency_ms = (time.perf_counter_ns() - text_started) / 1_000_000
 
         image_started = time.perf_counter_ns()
-        image_pred = image_runtime.predict(pair["image_path"])
+        try:
+            image_pred = image_runtime.predict(pair["image_path"])
+            image_error = None
+        except ValueError as exc:
+            image_pred = {"label": 0, "intent": "out_domain", "image_class": "rejected"}
+            image_error = str(exc)
         image_latency_ms = (time.perf_counter_ns() - image_started) / 1_000_000
+
+        parallel_started = time.perf_counter_ns()
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            text_future = executor.submit(text_runtime.predict, query, threshold)
+            image_future = executor.submit(image_runtime.predict, pair["image_path"])
+            text_parallel = text_future.result()
+            try:
+                image_parallel = image_future.result()
+            except ValueError:
+                image_parallel = {"label": 0, "intent": "out_domain", "image_class": "rejected"}
+        true_parallel_ms = (time.perf_counter_ns() - parallel_started) / 1_000_000
 
         # Simultaneous text+image decision: a request belongs to canteen business if either
         # the text or the image provides in-domain evidence.
@@ -372,6 +455,7 @@ def evaluate_pairs(
         image_latencies.append(image_latency_ms)
         sequential_latencies.append(text_latency_ms + image_latency_ms)
         parallel_estimated_latencies.append(max(text_latency_ms, image_latency_ms))
+        true_parallel_latencies.append(true_parallel_ms)
 
         details.append(
             {
@@ -388,7 +472,9 @@ def evaluate_pairs(
                 "latency_image_end_to_end_ms": round(image_latency_ms, 4),
                 "latency_sequential_ms": round(text_latency_ms + image_latency_ms, 4),
                 "latency_parallel_estimated_ms": round(max(text_latency_ms, image_latency_ms), 4),
+                "latency_parallel_actual_ms": round(true_parallel_ms, 4),
                 "correct": is_correct,
+                "image_error": image_error,
             }
         )
 
@@ -400,6 +486,7 @@ def evaluate_pairs(
         "latency_image_end_to_end": latency_summary(image_latencies),
         "latency_sequential": latency_summary(sequential_latencies),
         "latency_parallel_estimated": latency_summary(parallel_estimated_latencies),
+        "latency_parallel_actual": latency_summary(true_parallel_latencies),
         "details": details,
     }
     latencies = [item["latency_ms"] for item in text_result["details"]] + [item["latency_ms"] for item in image_result["details"]]
@@ -428,7 +515,16 @@ def main() -> None:
     image_rows = image_samples(image_data_dir)
 
     text_runtime = TextIntentRuntime(text_project, text_model, text_tokenizer, correction_lexicon, args.max_length)
-    image_runtime = ImageIntentRuntime(Path(args.image_checkpoint), args.image_size, args.device)
+    image_runtime = ImageIntentRuntime(
+        Path(args.image_checkpoint),
+        args.image_size,
+        args.device,
+        backend=args.image_backend,
+        max_image_bytes=args.max_image_bytes,
+        max_image_pixels=args.max_image_pixels,
+        decode_reduction=args.decode_reduction,
+        cv_threads=args.cv_threads,
+    )
 
     for _ in range(20):
         text_runtime.predict("今天食堂消费统计", args.threshold)
@@ -475,6 +571,7 @@ def main() -> None:
     print(f"image_latency_inference_only: {json.dumps(image_result['latency_inference_only'], ensure_ascii=False)}")
     print(f"paired_latency_sequential: {json.dumps(paired_result['latency_sequential'], ensure_ascii=False)}")
     print(f"paired_latency_parallel_estimated: {json.dumps(paired_result['latency_parallel_estimated'], ensure_ascii=False)}")
+    print(f"paired_latency_parallel_actual: {json.dumps(paired_result['latency_parallel_actual'], ensure_ascii=False)}")
     print(f"wrote: {output_path}")
 
 

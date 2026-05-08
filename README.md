@@ -110,6 +110,7 @@ canteen_agent/
       best_model.pt
       final_3class_report.json
       paired_text_image_intent_fusion_eval.json
+      paired_text_image_intent_fusion_eval_opencv_reduced4.json
       text_image_intent_fusion_eval.json
 ```
 
@@ -374,8 +375,13 @@ python text_image_intent_fusion.py `
   --text-split test `
   --image-data-dir image_dataset_3class `
   --image-checkpoint outputs_mnv3_3class_160/best_model.pt `
+  --image-backend opencv `
+  --decode-reduction 4 `
+  --cv-threads 1 `
+  --max-image-bytes 100000000 `
+  --max-image-pixels 200000000 `
   --pair-mode cycle `
-  --output outputs_mnv3_3class_160/paired_text_image_intent_fusion_eval.json
+  --output outputs_mnv3_3class_160/paired_text_image_intent_fusion_eval_opencv_reduced4.json
 ```
 
 说明：
@@ -455,10 +461,12 @@ python text_image_intent_fusion.py `
 | 测试对象 | 样本数 | 准确率 | TP | TN | FP | FN |
 |---|---:|---:|---:|---:|---:|---:|
 | 文本单模态 | 200 | 100.00% | 120 | 80 | 0 | 0 |
-| 图像单模态 | 702 | 98.86% | 466 | 228 | 6 | 2 |
-| 图文成对融合 | 702 | 99.72% | 610 | 90 | 2 | 0 |
+| 图像单模态，PIL 基线 | 702 | 98.86% | 466 | 228 | 6 | 2 |
+| 图文成对融合，PIL 基线 | 702 | 99.72% | 610 | 90 | 2 | 0 |
+| 图像单模态，OpenCV reduced4 | 702 | 98.15% | 465 | 224 | 10 | 3 |
+| 图文成对融合，OpenCV reduced4 | 702 | 99.29% | 610 | 87 | 5 | 0 |
 
-图文融合时延：
+PIL 基线图文融合时延：
 
 | 项目 | avg | p50 | p95 | p99 | max | <=50ms |
 |---|---:|---:|---:|---:|---:|---:|
@@ -468,6 +476,17 @@ python text_image_intent_fusion.py `
 | 图文串行端到端 | 70.77ms | 27.18ms | 209.04ms | 548.59ms | 1384.81ms | 70.09% |
 | 图文并行估算 | 63.43ms | 19.95ms | 201.54ms | 540.91ms | 1377.04ms | 72.65% |
 
+OpenCV reduced4 优化后图文融合时延：
+
+| 项目 | avg | p50 | p95 | p99 | max | <=50ms |
+|---|---:|---:|---:|---:|---:|---:|
+| 文本 pipeline | 6.25ms | 6.22ms | 7.29ms | 8.62ms | 9.26ms | 100.00% |
+| 图像端到端 | 28.68ms | 11.08ms | 88.63ms | 306.43ms | 528.38ms | 84.05% |
+| 图像模型推理 | 8.33ms | 8.39ms | 9.47ms | 10.51ms | 12.71ms | 100.00% |
+| 图文串行端到端 | 43.88ms | 21.26ms | 131.18ms | 335.22ms | 549.29ms | 73.65% |
+| 图文并行估算 | 37.21ms | 14.86ms | 121.79ms | 328.48ms | 542.49ms | 76.78% |
+| 图文真实并行 | 39.05ms | 18.18ms | 115.33ms | 305.55ms | 529.53ms | 75.36% |
+
 说明：
 
 - 图文串行端到端表示先跑文本再跑图片。
@@ -475,6 +494,8 @@ python text_image_intent_fusion.py `
 - 图像端到端时延包含文件读取、PIL 解码、resize、normalize 和模型推理。
 - 测试集中存在超大图片，PIL 触发过 `DecompressionBombWarning`，因此图像端到端 p99/max 有明显长尾。
 - 图像模型本体推理稳定在 10ms 左右，主要耗时来自图片读取、解码和预处理。
+- OpenCV reduced4 优化将图文真实并行平均时延降到 39.05ms，但 p95/p99 仍受超大图片解码影响。
+- 若线上必须保证完整端到端 50ms，需要配合输入约束，例如文件大小不超过 5-8MB、总像素不超过 2M-4M、客户端上传前压缩最长边。
 
 ## 8. 关键实现说明
 
@@ -527,6 +548,30 @@ python text_image_intent_fusion.py `
 - 可解释
 - 可单独替换文本或图像模型
 - 方便做端到端时延拆分
+
+### 8.4 实时图文并行优化
+
+本次新增的优化均在 `cv3/text_image_intent_fusion.py` 中：
+
+- `--image-backend opencv`：用 OpenCV bytes 解码替代 PIL。
+- `--decode-reduction 4`：JPEG 降采样解码，减少超大图解码和 resize 成本。
+- `--cv-threads 1`：控制 OpenCV 线程，减少线程调度抖动。
+- `--max-image-bytes`：限制图片文件大小。
+- `--max-image-pixels`：限制图片总像素。
+- 真实图文并行计时：用两个线程同时执行文本和图片链路。
+
+推荐实时服务方向：
+
+```text
+HTTP image bytes 输入，不落盘
+-> 图片大小/像素数校验
+-> OpenCV/turbojpeg 解码
+-> resize/normalize 快路径
+-> 文本和图片真正并行推理
+-> OR 融合输出
+```
+
+当前代码已经支持上述核心评估逻辑。若要 p95/p99 稳定进入 50ms，必须在真实服务入口限制超大图，否则单靠模型优化无法消除图片解码长尾。
 
 ## 9. 注意事项
 

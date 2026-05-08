@@ -135,8 +135,13 @@ python text_image_intent_fusion.py `
   --text-split test `
   --image-data-dir image_dataset_3class `
   --image-checkpoint outputs_mnv3_3class_160/best_model.pt `
+  --image-backend opencv `
+  --decode-reduction 4 `
+  --cv-threads 1 `
+  --max-image-bytes 100000000 `
+  --max-image-pixels 200000000 `
   --pair-mode cycle `
-  --output outputs_mnv3_3class_160/paired_text_image_intent_fusion_eval.json
+  --output outputs_mnv3_3class_160/paired_text_image_intent_fusion_eval_opencv_reduced4.json
 ```
 
 当前没有真实人工标注的图文成对 manifest，因此本次使用 `cycle` 方式构造 702 个图文对：图像 test 702 张全部参与，文本 test 200 条循环配对。成对标签按上述 OR 规则生成。
@@ -160,3 +165,33 @@ python text_image_intent_fusion.py `
 | 图文并行估算 | 63.43ms | 19.95ms | 201.54ms | 540.91ms | 1377.04ms | 72.65% |
 
 说明：图像端到端时延包含图片文件读取、PIL 解码、resize、normalize 和模型推理。测试集中存在超大图片，PIL 触发 `DecompressionBombWarning`，因此端到端 max/p99 有明显长尾；图像模型本体推理稳定在约 9.02ms。图文串行端到端表示先跑文本再跑图片；图文并行估算表示文本和图片同时推理，整条请求耗时近似取两者最大值。
+
+## 图文实时链路优化
+
+新增优化参数：
+
+| 参数 | 作用 |
+|---|---|
+| `--image-backend opencv` | 用 OpenCV bytes 解码替代 PIL |
+| `--decode-reduction 4` | JPEG 降采样解码，减少超大图解码成本 |
+| `--cv-threads 1` | 控制 OpenCV 线程数，降低调度抖动 |
+| `--max-image-bytes` | 限制图片文件大小 |
+| `--max-image-pixels` | 限制图片总像素 |
+
+OpenCV reduced4 结果：
+
+| 测试对象 | 样本 | 准确率 | TP | TN | FP | FN |
+|---|---:|---:|---:|---:|---:|---:|
+| 图像单模态 | 702 | 98.15% | 465 | 224 | 10 | 3 |
+| 图文成对融合 | 702 | 99.29% | 610 | 87 | 5 | 0 |
+
+OpenCV reduced4 时延：
+
+| 项目 | avg | p50 | p95 | p99 | max | <=50ms |
+|---|---:|---:|---:|---:|---:|---:|
+| 文本 pipeline | 6.25ms | 6.22ms | 7.29ms | 8.62ms | 9.26ms | 100.00% |
+| 图像端到端 | 28.68ms | 11.08ms | 88.63ms | 306.43ms | 528.38ms | 84.05% |
+| 图像模型推理 | 8.33ms | 8.39ms | 9.47ms | 10.51ms | 12.71ms | 100.00% |
+| 图文真实并行 | 39.05ms | 18.18ms | 115.33ms | 305.55ms | 529.53ms | 75.36% |
+
+结论：OpenCV reduced4 已将图文真实并行平均时延降到 39.05ms，但 p95/p99 仍受超大图片解码影响。线上若要求完整端到端稳定 50ms，需要在入口限制图片大小/像素数，或要求客户端上传前压缩图片。
